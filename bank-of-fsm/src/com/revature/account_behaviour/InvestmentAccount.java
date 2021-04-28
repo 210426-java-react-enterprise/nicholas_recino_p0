@@ -2,10 +2,9 @@ package com.revature.account_behaviour;
 
 import com.revature.models.Account;
 
-public class CheckingAccount extends Account {
+public class InvestmentAccount extends Account {
 
-    public CheckingAccount(double balance, int accountNumber, String password) {
+    public InvestmentAccount(double balance, int accountNumber, String password) {
         super(balance, accountNumber, password);
     }
-
 }

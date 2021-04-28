@@ -4,10 +4,26 @@ public class LinkedList {
     private Node head;
     private Node tail;
 
+    public LinkedList(){
+        head = null;
+        tail = null;
+    }
+
     public boolean add(Object T){
         Node iterate = head;
+        if (head == null && tail == null) {
+            head = tail = new Node(null, null, T);
+            return true;
+        }
+
+        if (head == tail){
+            head.setNextNode(new Node(null,head,T));
+            tail = head.getNextNode();
+            return true;
+        }
+
         while(iterate.getNextNode()!=null){
-            iterate.setNextNode(iterate.getNextNode());
+            iterate = advance(iterate);
         }
         iterate.setNextNode(new Node(null, iterate, T));
         tail = iterate.getNextNode();

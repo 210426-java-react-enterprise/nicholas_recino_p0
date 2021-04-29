@@ -1,4 +1,4 @@
-package com.revature.util;
+package com.revature.util.collection;
 
 public class Node {
     private Node nextNode;

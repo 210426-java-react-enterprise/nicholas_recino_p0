@@ -1,7 +1,7 @@
 package com.revature.models;
 
-import com.revature.util.LinkedList;
-import sun.awt.image.ImageWatched;
+import com.revature.util.collection.LinkedList;
+
 // TODO Refactor String password to allow for proper User checking as an account can have more than one user
 public class Account {
     private double balance;

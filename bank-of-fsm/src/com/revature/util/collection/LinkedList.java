@@ -1,4 +1,4 @@
-package com.revature.util;
+package com.revature.util.collection;
 /* TODO Maybe push through the type ahead of time and use generics? might be to close to copying the
     oem solution
  */

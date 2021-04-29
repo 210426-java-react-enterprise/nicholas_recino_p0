@@ -1,6 +1,6 @@
-package com.revature.screens;
+package com.revature.fsmapp.screens;
 
-import com.revature.util.Screen;
+import com.revature.fsmapp.util.Screen;
 
 public class UserAccountsScreen extends Screen {
     @Override

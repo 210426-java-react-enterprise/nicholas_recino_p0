@@ -1,6 +1,6 @@
-package com.revature.models;
+package com.revature.fsmapp.models;
 
-import com.revature.util.collection.LinkedList;
+import com.revature.fsmapp.util.collection.LinkedList;
 
 // TODO Refactor String password to allow for proper User checking as an account can have more than one user
 public class Account {

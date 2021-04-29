@@ -1,4 +1,4 @@
-package com.revature.util;
+package com.revature.fsmapp.util;
 
 import org.json.simple.JSONObject;
 

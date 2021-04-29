@@ -1,4 +1,4 @@
-package com.revature.models;
+package com.revature.fsmapp.models;
 
 import java.util.Date;
 

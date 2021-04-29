@@ -1,4 +1,4 @@
-package com.revature.util.collection;
+package com.revature.fsmapp.util.collection;
 
 public class Node {
     private Node nextNode;

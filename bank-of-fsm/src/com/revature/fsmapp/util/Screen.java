@@ -1,4 +1,4 @@
-package com.revature.util;
+package com.revature.fsmapp.util;
 
 import java.io.BufferedReader;
 

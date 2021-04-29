@@ -1,6 +1,6 @@
-package com.revature.account_behaviour;
+package com.revature.fsmapp.account_behaviour;
 
-import com.revature.models.Account;
+import com.revature.fsmapp.models.Account;
 
 public class CheckingAccount extends Account {
 

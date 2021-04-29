@@ -1,8 +1,12 @@
-package com.revature.util.collection;
+package com.revature.fsmapp.util.collection;
+
+import java.util.Collection;
+import java.util.Iterator;
+
 /* TODO Maybe push through the type ahead of time and use generics? might be to close to copying the
     oem solution
  */
-public class LinkedList {
+public class LinkedList implements Collection {
     private Node head;
     private Node tail;
 
@@ -57,7 +61,21 @@ public class LinkedList {
         }
         return returnArr;
     }
-// Generates the size of the list
+    // Returns a SubList LinkedList from fromIndex to toIndex
+    public LinkedList subList(int fromIndex, int toIndex){
+        LinkedList subList = new LinkedList();
+        if(toIndex>size())
+            toIndex=size();
+        if(fromIndex<0)
+            fromIndex = 0;
+        else if(fromIndex>toIndex)
+            fromIndex = toIndex;
+        for(int i= fromIndex; i< toIndex; i++){
+            subList.add(get(i));
+        }
+        return subList;
+    }
+    // Generates the size of the list
     public int size(){
         int size = 0;
         Node iterate = head;
@@ -77,7 +95,6 @@ public class LinkedList {
         }
     }
 // Removes a Generic Object from the LinkedList returns true if successful
-// TODO Make type safe, currently a simple Object, cant guarentee .equals Method implemented properly.
     public boolean remove(Object T){
 
         if (head == null && tail == null){
@@ -105,28 +122,42 @@ public class LinkedList {
         // And therefore the remove operation failed
         return false;
     }
-// Clears out the LinkedList
+//  Clears out the LinkedList
     public void clear(){
         head = tail = null;
     }
-// TODO Search for object in a LinkedList
+//  TODO Search for object in a LinkedList
     public boolean contains(Object T){
         return true;
     }
-// Returns a SubList LinkedList from fromIndex to toIndex
-    public LinkedList subList(int fromIndex, int toIndex){
-        LinkedList subList = new LinkedList();
-        if(toIndex>size())
-            toIndex=size();
-        if(fromIndex<0)
-            fromIndex = 0;
-        else if(fromIndex>toIndex)
-            fromIndex = toIndex;
-        for(int i= fromIndex; i< toIndex; i++){
-            subList.add(get(i));
-        }
-        return subList;
+//  Not Really Needed Deprecate
+    @Override
+    public boolean addAll(Collection c) {
+        return false;
     }
-
-
+//  Not Really Needed Deprecate
+    @Override
+    public boolean retainAll(Collection c) {
+        return false;
+    }
+// Not Really Needed Deprecate
+    @Override
+    public boolean removeAll(Collection c) {
+        return false;
+    }
+//  Not Really Needed Deprecate
+    @Override
+    public boolean containsAll(Collection c) {
+        return false;
+    }
+//  Not Really Needed Deprecate
+    @Override
+    public Iterator iterator() {
+        return null;
+    }
+//  Not Really Needed Deprecate
+    @Override
+    public Object[] toArray(Object[] a) {
+        return new Object[0];
+    }
 }

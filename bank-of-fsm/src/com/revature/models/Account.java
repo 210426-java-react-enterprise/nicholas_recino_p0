@@ -1,14 +1,19 @@
 package com.revature.models;
 
+import com.revature.util.LinkedList;
+import sun.awt.image.ImageWatched;
+// TODO Refactor String password to allow for proper User checking as an account can have more than one user
 public class Account {
     private double balance;
     private int accountNumber;
     private String password;
+    private LinkedList transactionLog;
 
     public Account(double balance, int accountNumber) {
         this.balance = balance;
         this.accountNumber = accountNumber;
         this.password = "password";
+        transactionLog = new LinkedList();
     }
 
     public Account(double balance, int accountNumber,String password) {

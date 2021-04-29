@@ -1,4 +1,4 @@
-package com.revature.screens;
+package com.revature.util;
 
 import java.io.BufferedReader;
 

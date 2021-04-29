@@ -1,5 +1,7 @@
 package com.revature.util;
-
+/* TODO Maybe push through the type ahead of time and use generics? might be to close to copying the
+    oem solution
+ */
 public class LinkedList {
     private Node head;
     private Node tail;
@@ -8,7 +10,8 @@ public class LinkedList {
         head = null;
         tail = null;
     }
-
+// TODO Implement add Object at specific index, if index is greater than size append to end
+// Adds Object T to end of Linked List
     public boolean add(Object T){
         Node iterate = head;
         if (head == null && tail == null) {
@@ -29,13 +32,12 @@ public class LinkedList {
         tail = iterate.getNextNode();
         return true;
     }
-
+//  Returns true if head is null.
     public boolean isEmpty(){
-        return head.getContents()==null;
+        return head==null;
     }
-
+// Gets a specific Object at the index specified
     public Object get(int index){
-
         if (head.getContents()==null){
             return null;
         }
@@ -45,7 +47,7 @@ public class LinkedList {
         }
         return iterate.getContents();
     }
-
+// Modifies the List into a static array the size of the LinkedList
     public Object[] toArray(){
         Object[] returnArr = new Object[size()];
         Node iterate = head;
@@ -55,7 +57,7 @@ public class LinkedList {
         }
         return returnArr;
     }
-
+// Generates the size of the list
     public int size(){
         int size = 0;
         Node iterate = head;
@@ -65,7 +67,7 @@ public class LinkedList {
         }
         return size;
     }
-
+// Advances through the LinkedList and returns the Next Node in line, if null returns the current node
     private Node advance(Node temp){
         if(temp.getNextNode()!=null) {
             return new Node(temp.getNextNode().getNextNode(),
@@ -74,20 +76,44 @@ public class LinkedList {
             return temp;
         }
     }
+// Removes a Generic Object from the LinkedList returns true if successful
+// TODO Make type safe, currently a simple Object, cant guarentee .equals Method implemented properly.
+    public boolean remove(Object T){
 
-//    public boolean remove(Object T){
-//
-//    }
-
-    public void clear(){
-        head = null;
-        tail = null;
+        if (head == null && tail == null){
+            return false;
+        }else if(head==tail){
+            if(!head.getContents().equals(T)){
+                return false;
+            }else{
+                // As both are equal to each other and the contents are equivalent to T, reuse code instead;
+                clear();
+            }
+        }else{
+            Node iterate = head;
+            while(iterate.getNextNode()!=null){
+                if(iterate.getContents().equals(T)){
+                    // Iterate holds a previous node as well as the next due to being doubly linked;
+                    iterate.getPrevNode().setNextNode(iterate.getNextNode());
+                    return true;
+                }else{
+                    iterate = advance(iterate);
+                }
+            }
+        }
+        // If falling through to this then it is assumed that Object T is not present in the LinkedList
+        // And therefore the remove operation failed
+        return false;
     }
-
-//    public boolean contains(Object T){
-//
-//    }
-
+// Clears out the LinkedList
+    public void clear(){
+        head = tail = null;
+    }
+// TODO Search for object in a LinkedList
+    public boolean contains(Object T){
+        return true;
+    }
+// Returns a SubList LinkedList from fromIndex to toIndex
     public LinkedList subList(int fromIndex, int toIndex){
         LinkedList subList = new LinkedList();
         if(toIndex>size())

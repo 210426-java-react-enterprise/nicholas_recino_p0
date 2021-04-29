@@ -130,6 +130,8 @@ public class LinkedList implements Collection {
     public boolean contains(Object T){
         return true;
     }
+
+
 //  Not Really Needed Deprecate
     @Override
     public boolean addAll(Collection c) {

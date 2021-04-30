@@ -21,6 +21,12 @@ public class Account {
         this.accountNumber = accountNumber;
         this.password = password;
     }
+// TODO implement default table of account numbers to apply a new account number to, maybe check to see if its in use first
+    public Account() {
+        accountNumber = 00000001;
+        balance = 0;
+        password = "password";
+    }
 
     public double getBalance() {
         return balance;

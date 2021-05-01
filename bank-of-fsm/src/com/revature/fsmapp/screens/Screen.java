@@ -1,4 +1,4 @@
-package com.revature.fsmapp.util;
+package com.revature.fsmapp.screens;
 
 import java.io.BufferedReader;
 

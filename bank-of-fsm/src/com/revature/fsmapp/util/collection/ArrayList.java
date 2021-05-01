@@ -5,7 +5,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
 
-public class ArrayList implements Collection {
+public class ArrayList<E> implements Collection<E> {
 
     private Object[] arrayList;
     private int currentSize;

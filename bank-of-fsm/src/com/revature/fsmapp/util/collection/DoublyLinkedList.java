@@ -6,34 +6,34 @@ import java.util.Iterator;
 /* TODO Maybe push through the type ahead of time and use generics? might be to close to copying the
     oem solution
  */
-public class LinkedList implements Collection {
-    private Node head;
-    private Node tail;
+public class DoublyLinkedList<E> implements Collection<E> {
+    private Node<E> head;
+    private Node<E> tail;
 
-    public LinkedList(){
+    public DoublyLinkedList(){
         head = null;
         tail = null;
     }
 // TODO Implement add Object at specific index, if index is greater than size append to end
-// Adds Object T to end of Linked List
-    public boolean add(Object T){
+// Adds data to end of Linked List
+    public boolean add(E data){
         Node iterate = head;
         if (head == null && tail == null) {
-            head = tail = new Node(null, null, T);
+            head = tail = new Node(data,null, null);
             return true;
         }
 
         if (head == tail){
-            head.setNextNode(new Node(null,head,T));
-            tail = head.getNextNode();
+            head.nextNode= (new Node(data,null,head));
+            tail = head.nextNode;
             return true;
         }
 
-        while(iterate.getNextNode()!=null){
+        while(iterate.nextNode!=null){
             iterate = advance(iterate);
         }
-        iterate.setNextNode(new Node(null, iterate, T));
-        tail = iterate.getNextNode();
+        iterate.nextNode = (new Node(data,null, iterate));
+        tail = iterate.nextNode;
         return true;
     }
 //  Returns true if head is null.
@@ -41,29 +41,29 @@ public class LinkedList implements Collection {
         return head==null;
     }
 // Gets a specific Object at the index specified
-    public Object get(int index){
-        if (head.getContents()==null){
+    public E get(int index){
+        if (head.data==null){
             return null;
         }
         Node iterate = head;
         for(int i = 0; i<index-1;i++){
             iterate = advance(iterate);
         }
-        return iterate.getContents();
+        return (E) iterate.data;
     }
 // Modifies the List into a static array the size of the LinkedList
-    public Object[] toArray(){
+    public E[] toArray(){
         Object[] returnArr = new Object[size()];
         Node iterate = head;
         for(int i = 0;i<returnArr.length;i++){
-            returnArr[i] = iterate.getContents();
+            returnArr[i] = iterate.data;
             iterate = advance(iterate);
         }
-        return returnArr;
+        return (E[])returnArr;
     }
     // Returns a SubList LinkedList from fromIndex to toIndex
-    public LinkedList subList(int fromIndex, int toIndex){
-        LinkedList subList = new LinkedList();
+    public DoublyLinkedList subList(int fromIndex, int toIndex){
+        DoublyLinkedList subList = new DoublyLinkedList();
         if(toIndex>size())
             toIndex=size();
         if(fromIndex<0)
@@ -79,7 +79,7 @@ public class LinkedList implements Collection {
     public int size(){
         int size = 0;
         Node iterate = head;
-        while(iterate.getNextNode()!=null){
+        while(iterate.nextNode!=null){
             iterate = advance(iterate);
             size++;
         }
@@ -87,9 +87,9 @@ public class LinkedList implements Collection {
     }
 // Advances through the LinkedList and returns the Next Node in line, if null returns the current node
     private Node advance(Node temp){
-        if(temp.getNextNode()!=null) {
-            return new Node(temp.getNextNode().getNextNode(),
-                    temp, temp.getNextNode().getContents());
+        if(temp.nextNode!=null) {
+            return new Node(temp.nextNode.nextNode,
+                    temp, temp.nextNode.prevNode);
         }else{
             return temp;
         }
@@ -100,7 +100,7 @@ public class LinkedList implements Collection {
         if (head == null && tail == null){
             return false;
         }else if(head==tail){
-            if(!head.getContents().equals(T)){
+            if(!head.data.equals(T)){
                 return false;
             }else{
                 // As both are equal to each other and the contents are equivalent to T, reuse code instead;
@@ -108,10 +108,10 @@ public class LinkedList implements Collection {
             }
         }else{
             Node iterate = head;
-            while(iterate.getNextNode()!=null){
-                if(iterate.getContents().equals(T)){
+            while(iterate.nextNode!=null){
+                if(iterate.data.equals(T)){
                     // Iterate holds a previous node as well as the next due to being doubly linked;
-                    iterate.getPrevNode().setNextNode(iterate.getNextNode());
+                    iterate.prevNode = iterate.nextNode;
                     return true;
                 }else{
                     iterate = advance(iterate);
@@ -161,5 +161,20 @@ public class LinkedList implements Collection {
     @Override
     public Object[] toArray(Object[] a) {
         return new Object[0];
+    }
+
+    private static class Node<T>{
+        T data;
+        Node<T> nextNode;
+        Node<T> prevNode;
+
+        Node(T data){
+            this.data = data;
+        }
+        Node(T data, Node<T> nextNode, Node<T> prevNode){
+            this.data = data;
+            this.nextNode = nextNode;
+            this.prevNode = prevNode;
+        }
     }
 }

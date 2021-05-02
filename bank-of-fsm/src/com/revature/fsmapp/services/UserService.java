@@ -1,4 +1,10 @@
 package com.revature.fsmapp.services;
 
-public class UserService {
+import com.revature.fsmapp.models.AppUser;
+
+public class UserService implements Service {
+
+    public AppUser userValidation(String username, String password){
+        return null;
+    }
 }

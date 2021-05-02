@@ -18,20 +18,20 @@ As a user I can:
 ## Minimum Features
 - [ ] Basic validation (no negative deposits/withdrawals, no overdrafting, etc.) 
 - [ ] All exceptions are properly caught and handled
-- [/] Proper use of OOP principles
+- [x] Proper use of OOP principles
 - [ ] Documentation (all classes and methods have basic documentation)
-- [/] Use of custom data structures (do not use java.util Collection types!)
+- [x] Use of custom data structures (do not use java.util Collection types!)
 - [ ] SQL Data Persistance (at least 3 tables; all 3NF (normal form))
 #### Bonus Features
 - [ ] Unit tests for persistance-layer classes
 - [ ] Logging messages and exceptions to a file
 ## Tech Stack
-- [/] Java 8
+- [x] Java 8
 - [ ] Apache Maven
 - [ ] PostGreSQL deployed on AWS RDS
-- [/] Git SCM (on GitHub)
+- [x] Git SCM (on GitHub)
 ## Init Instructions
-- [Completed] Create a new repository within this organization (naming convention: `firstname_lastname_p0`)
+- [x] Create a new repository within this organization (naming convention: `firstname_lastname_p0`)
 ## Presentation
-- [/] finalized version of application must be pushed to personal repository within this organization by the presentation date
+- [ ] finalized version of application must be pushed to personal repository within this organization by the presentation date
 - [ ] 5 minute live demonstration of the implemented features

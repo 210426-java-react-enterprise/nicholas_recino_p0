@@ -1,5 +1,6 @@
 package com.revature.fsmapp.util.collection;
 
+import javax.naming.event.ObjectChangeListener;
 import java.lang.reflect.Array;
 import java.util.Collection;
 import java.util.Collections;
@@ -7,17 +8,17 @@ import java.util.Iterator;
 
 public class ArrayList<E> implements Collection<E> {
 
-    private Object[] arrayList;
+    private E[] arrayList;
     private int currentSize;
 
     public ArrayList(){
         super();
-        arrayList = new Object[currentSize = 10];
+        arrayList = (E[])new Object[currentSize = 10];
     }
 
     public ArrayList(int sizeRequired){
         super();
-        arrayList = new Object[currentSize=sizeRequired];
+        arrayList = (E[])new Object[currentSize=sizeRequired];
     }
 
     public int size(){
@@ -31,7 +32,7 @@ public class ArrayList<E> implements Collection<E> {
 
     @Override
     public boolean contains(Object o) {
-        for(Object search:arrayList){
+        for(E search:arrayList){
             if(search.equals(o))
                 return true;
         }
@@ -39,9 +40,9 @@ public class ArrayList<E> implements Collection<E> {
     }
 
     @Override
-    public boolean add(Object o) {
+    public boolean add(E o) {
         int index = 0;
-        for(Object o1:arrayList){
+        for(E o1:arrayList){
             if(o1==null){
                 arrayList[index] = o;
                 return true;
@@ -50,8 +51,8 @@ public class ArrayList<E> implements Collection<E> {
             }
         }
         index = 0;
-        Object[] tempArr = new Object[currentSize*2];
-        for(Object o1:arrayList){
+        E[] tempArr = (E[]) new Object[currentSize*2];
+        for(E o1:arrayList){
              tempArr[index++] = o1;
             }
         return true;
@@ -77,7 +78,7 @@ public class ArrayList<E> implements Collection<E> {
 
     @Override
     public void clear() {
-        arrayList = new Object[currentSize=10];
+        arrayList = (E[]) new Object[currentSize=10];
     }
 
 //    Methods below deprecated for this application

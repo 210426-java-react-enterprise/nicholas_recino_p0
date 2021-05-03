@@ -7,4 +7,8 @@ public class UserService implements Service {
     public AppUser userValidation(String username, String password){
         return null;
     }
+
+    public void init(){
+
+    }
 }

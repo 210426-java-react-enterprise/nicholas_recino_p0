@@ -1,4 +1,5 @@
 package com.revature.fsmapp.util;
 
-public class AppState {
+public class LinkedListTest {
+
 }

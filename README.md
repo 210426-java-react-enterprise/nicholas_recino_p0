@@ -27,7 +27,7 @@ As a user I can:
 - [ ] Logging messages and exceptions to a file
 ## Tech Stack
 - [x] Java 8
-- [ ] Apache Maven
+- [x] Apache Maven
 - [ ] PostGreSQL deployed on AWS RDS
 - [x] Git SCM (on GitHub)
 ## Init Instructions

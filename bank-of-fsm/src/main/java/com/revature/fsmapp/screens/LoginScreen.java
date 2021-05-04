@@ -6,6 +6,7 @@ import java.io.IOException;
 public class LoginScreen extends Screen {
 
     public LoginScreen(BufferedReader reader){
+        super("LoginScreen","/login");
         consoleReader = reader;
     }
     @Override

@@ -1,7 +1,9 @@
 package com.revature.fsmapp.util.collection;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.List;
 
 /* TODO Maybe push through the type ahead of time and use generics? might be to close to copying the
     oem solution
@@ -28,6 +30,7 @@ public class DoublyLinkedList<E> implements Collection<E> {
             tail = head.nextNode;
             return true;
         }
+        ArrayList<String> list;
 
         while(iterate.nextNode!=null){
             iterate = advance(iterate);

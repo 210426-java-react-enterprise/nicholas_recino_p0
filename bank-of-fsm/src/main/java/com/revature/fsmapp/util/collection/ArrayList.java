@@ -111,4 +111,11 @@ public class ArrayList<E> implements Collection<E> {
     public Iterator iterator() {
         return null;
     }
+
+    public E get(int index) {
+        for(int i=0;i<index;i++){
+
+        }
+        return null;
+    }
 }

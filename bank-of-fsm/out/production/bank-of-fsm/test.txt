@@ -1,1 +1,0 @@
-Making sure this folder falls into git repository, not the final implementation.

@@ -25,3 +25,8 @@ hs_err_pid*
 # IDE Specific Files
 .idea/
 *.iml
+# Ignore Target Build Folder
+target/
+
+#Ignore Properties Files
+*.properties

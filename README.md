@@ -28,7 +28,7 @@ As a user I can:
 ## Tech Stack
 - [x] Java 8
 - [x] Apache Maven
-- [ ] PostGreSQL deployed on AWS RDS
+- [x] PostGreSQL deployed on AWS RDS
 - [x] Git SCM (on GitHub)
 ## Init Instructions
 - [x] Create a new repository within this organization (naming convention: `firstname_lastname_p0`)

@@ -5,10 +5,12 @@ import com.revature.fsmapp.screens.Screen;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.sql.Connection;
 
 public class AppState {
     private BufferedReader consoleReader;
     private ScreenRouter router;
+    private Connection conn;
     private boolean appRunning;
 
     public AppState(){
@@ -18,7 +20,7 @@ public class AppState {
 
         this.router = new ScreenRouter();
 
-        final UserDAO userDAO= new UserDAO();
+        final UserDAO userDAO= new UserDAO(conn = ConnectionFactory.getInstance().getConnection());
 
 
         System.out.println("Application Initialized...");

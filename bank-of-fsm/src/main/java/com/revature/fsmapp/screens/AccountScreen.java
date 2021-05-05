@@ -5,7 +5,7 @@ import java.io.BufferedReader;
 public class AccountScreen extends Screen {
 
     public AccountScreen(BufferedReader consoleReader) {
-        super("AccountScreen","/Account");
+        super("AccountScreen","/account_info");
         this.consoleReader = consoleReader;
 
     }

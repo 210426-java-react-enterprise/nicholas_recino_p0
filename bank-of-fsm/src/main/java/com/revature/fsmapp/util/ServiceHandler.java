@@ -1,32 +1,38 @@
 package com.revature.fsmapp.util;
 
+import com.revature.fsmapp.exceptions.ServiceNotFoundException;
 import com.revature.fsmapp.services.Service;
-import com.revature.fsmapp.util.collection.ArrayList;
 
 import java.util.HashMap;
 
 public class ServiceHandler {
-    private HashMap<String, Service> serviceHandlers;
+    private static ServiceHandler serviceHandler;
+    private HashMap<String, Service> services;
 
-    public void addService(Service service, String serviceName){
-        serviceHandlers.put(serviceName,service);
+    private ServiceHandler(){
+        services = new HashMap<>();
     }
 
-    public void stopService(String serviceName){
-            serviceHandlers.remove(serviceName);
+    public static ServiceHandler getInstance(){
+        if (serviceHandler == null)
+            serviceHandler = new ServiceHandler();
+        return serviceHandler;
     }
 
-    public void startService(String serviceName){
-
+    public ServiceHandler addService(Service service, String serviceName){
+        services.put(serviceName,service);
+        return this;
     }
 
-    public void initServices(){
-        Service[] servicesToBeInitialized = (Service[])serviceHandlers.values().toArray();
-        for(Service service: servicesToBeInitialized){
-            service.init();
-        }
+    public ServiceHandler stopService(String serviceName){
+            services.remove(serviceName);
+            return this;
     }
 
-
-
+    public Service startService(String serviceName) throws ServiceNotFoundException {
+        Service service = services.get(serviceName);
+        if (service == null)
+            throw new ServiceNotFoundException();
+        return service;
+    }
 }

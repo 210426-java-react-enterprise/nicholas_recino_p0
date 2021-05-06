@@ -30,3 +30,6 @@ target/
 
 #Ignore Properties Files
 *.properties
+
+#Ignore SQL Files
+*.sql

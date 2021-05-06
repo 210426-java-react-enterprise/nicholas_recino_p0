@@ -7,7 +7,7 @@ public class ScreenRouter {
     private ArrayList<Screen> screens;
 
     public ScreenRouter(){
-
+        screens = new ArrayList<>();
     }
 
     public ScreenRouter addScreen(Screen screen){

@@ -6,26 +6,26 @@ import com.revature.fsmapp.util.collection.DoublyLinkedList;
 public class Account {
     private double balance;
     private int accountNumber;
-    private String password;
+    private String pin;
     private DoublyLinkedList transactionLog;
 
     public Account(double balance, int accountNumber) {
         this.balance = balance;
         this.accountNumber = accountNumber;
-        this.password = "password";
+        this.pin = "password";
         transactionLog = new DoublyLinkedList();
     }
 
-    public Account(double balance, int accountNumber,String password) {
+    public Account(double balance, int accountNumber,String pin) {
         this.balance = balance;
         this.accountNumber = accountNumber;
-        this.password = password;
+        this.pin = pin;
     }
 // TODO implement default table of account numbers to apply a new account number to, maybe check to see if its in use first
     public Account() {
         accountNumber = 00000001;
         balance = 0;
-        password = "password";
+        pin = "password";
     }
 
     public double getBalance() {
@@ -37,7 +37,7 @@ public class Account {
     }
 //  Verifies Account Password prior to changing balance
     public void setBalance(double balance,String password) {
-        if(this.password.equals(password)) {
+        if(this.pin.equals(password)) {
             this.balance = balance;
         }else{
             System.err.println("Proper credentials required, please re-enter password!!!!");
@@ -45,7 +45,7 @@ public class Account {
     }
 //  Verifies Account Password prior to changing account number
    public void setAccountNumber(int accountNumber,String password) {
-        if(this.password.equals(password)) {
+        if(this.pin.equals(password)) {
             this.accountNumber = accountNumber;
         }else{
             System.err.println("Proper credentials required, please re-enter password!!!!");
@@ -54,8 +54,8 @@ public class Account {
 
 //  Verifies that Current Password is accurate prior to changing password.
     public void setPassword(String currentPassword,String newPassword) {
-        if(this.password.equals(currentPassword)) {
-            this.password = newPassword;
+        if(this.pin.equals(currentPassword)) {
+            this.pin = newPassword;
         }else{
             System.err.println("Proper credentials required, please re-enter password!!!!");
         }

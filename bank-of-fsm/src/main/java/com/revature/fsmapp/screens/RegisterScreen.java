@@ -6,10 +6,9 @@ import java.io.BufferedReader;
 
 public class RegisterScreen extends Screen {
     private ScreenRouter router;
-    public RegisterScreen(BufferedReader consoleReader, ScreenRouter router) {
+    public RegisterScreen(BufferedReader consoleReader) {
         super("Register Screen", "/register");
         this.consoleReader = consoleReader;
-        this.router = router;
     }
 
     @Override

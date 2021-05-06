@@ -1,121 +1,84 @@
 package com.revature.fsmapp.util.collection;
 
-import javax.naming.event.ObjectChangeListener;
-import java.lang.reflect.Array;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Iterator;
+import java.util.Arrays;
 
-public class ArrayList<E> implements Collection<E> {
+public class ArrayList<E> implements List<E> {
+    private Object[] arrayList;
+    private int size = 0;
 
-    private E[] arrayList;
-    private int currentSize;
-
-    public ArrayList(){
-        super();
-        arrayList = (E[])new Object[currentSize = 10];
+    public ArrayList() {
+        int DEFAULT_CAPACITY = 10;
+        this.arrayList =  new Object[DEFAULT_CAPACITY];
     }
 
-    public ArrayList(int sizeRequired){
-        super();
-        arrayList = (E[])new Object[currentSize=sizeRequired];
+    public ArrayList(int capacity) {
+        this.arrayList = new Object[capacity];
     }
 
-    public int size(){
-        return currentSize;
-    }
-//  As the list
-    @Override
-    public boolean isEmpty() {
-        return (arrayList[0]==null);
+    /**
+     * Adds an element to the back of the array. Doubles the size of the array if the size is full.
+     * @param objectToAdd The data to be added
+     */
+    public void add(E objectToAdd) {
+        if (size == arrayList.length)
+            capacityIncrease();
+        arrayList[size++] = objectToAdd;
     }
 
     @Override
-    public boolean contains(Object o) {
-        for(E search:arrayList){
-            if(search.equals(o))
-                return true;
-        }
-        return false;
-    }
-
-    @Override
-    public boolean add(E o) {
-        int index = 0;
-        for(E o1:arrayList){
-            if(o1==null){
-                arrayList[index] = o;
-                return true;
-            }else{
-                index++;
+    public boolean contains(E object) {
+        boolean identical = false;
+        for(int i=0;i<size;i++){
+            if(arrayList[i].equals(object)) {
+                identical = true;
+                break;
             }
         }
-        index = 0;
-        E[] tempArr = (E[]) new Object[currentSize*2];
-        for(E o1:arrayList){
-             tempArr[index++] = o1;
-            }
-        return true;
+        return identical;
     }
 
-    @Override
-    public boolean remove(Object o) {
-        int index = 0;
-        boolean success = false;
-        for(Object o1:arrayList){
-            if(o1.equals(o1)){
-                arrayList[index] = null;
-                success = true;
-                for (int i = index; i < currentSize; i++) {
+    /**
+     * Increases the size of the array to allow for additional elements
+     */
+    private void capacityIncrease() {
+        int expandedArray = arrayList.length * 2;
+        this.arrayList = Arrays.copyOf(arrayList, expandedArray);
+    }
 
-                }
-            }else{
-                index++;
-            }
+    /**
+     *
+     * @return Current size of the array
+     */
+    public int size() {
+        return this.size;
+    }
+
+    /**
+     * Gets the element at the specified index.
+     * @param index Positional Index of Element in the array
+     * @return The Data contained inside the Element at index.
+     * @exception  IndexOutOfBoundsException if the Index is not contained in the array list
+     */
+    public E get(int index) throws IndexOutOfBoundsException {
+        if (index >= size || index < 0)
+            throw new IndexOutOfBoundsException(String.format("Index: %d Size: %d", index, size));
+        return (E) arrayList[index];
+    }
+
+    /**
+     * Removes the Element at index in the array
+     * @param index The index of the Element to be removed
+     */
+    public void removeAt(int index) {
+        Object[] arrayCopy = new Object[arrayList.length - 1];
+
+        for (int i = 0, j = 0; i < arrayList.length; i++) {
+            if (i != index)
+                arrayCopy[j++] = arrayList[i];
         }
-        return success;
+        arrayList = arrayCopy;
+        size--;
     }
 
-    @Override
-    public void clear() {
-        arrayList = (E[]) new Object[currentSize=10];
-    }
-
-//    Methods below deprecated for this application
-
-    @Override
-    public boolean addAll(Collection c) {
-        return false;
-    }
-    @Override
-    public boolean retainAll(Collection c) {
-        return false;
-    }
-    @Override
-    public boolean removeAll(Collection c) {
-        return false;
-    }
-    @Override
-    public boolean containsAll(Collection c) {
-        return false;
-    }
-    @Override
-    public Object[] toArray(Object[] a) {
-        return new Object[0];
-    }
-    @Override
-    public Object[] toArray() {
-        return new Object[0];
-    }
-    @Override
-    public Iterator iterator() {
-        return null;
-    }
-
-    public E get(int index) {
-        for(int i=0;i<index;i++){
-
-        }
-        return null;
-    }
 }
+

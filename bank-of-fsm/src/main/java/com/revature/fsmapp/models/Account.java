@@ -1,19 +1,21 @@
 package com.revature.fsmapp.models;
 
+import com.revature.fsmapp.util.collection.ArrayList;
 import com.revature.fsmapp.util.collection.DoublyLinkedList;
 
 // TODO Refactor String password to allow for proper User checking as an account can have more than one user
 public class Account {
-    private double balance;
+    private int accountId;
     private int accountNumber;
     private String pin;
-    private DoublyLinkedList transactionLog;
+    private double balance;
+    private ArrayList<Transaction> transactionLog;
 
     public Account(double balance, int accountNumber) {
         this.balance = balance;
         this.accountNumber = accountNumber;
         this.pin = "password";
-        transactionLog = new DoublyLinkedList();
+        transactionLog = new ArrayList<>();
     }
 
     public Account(double balance, int accountNumber,String pin) {

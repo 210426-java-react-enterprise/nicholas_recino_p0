@@ -5,6 +5,7 @@ import com.revature.fsmapp.models.Account;
 import com.revature.fsmapp.models.AppUser;
 import com.revature.fsmapp.services.AccountService;
 import com.revature.fsmapp.util.ScreenRouter;
+import com.revature.fsmapp.util.collection.List;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -15,6 +16,7 @@ public class AccountSelectionScreen extends Screen {
     private ScreenRouter router;
     private AccountService accountService;
     private AppUser appUser;
+    private List<Account> accounts;
 
     public AccountSelectionScreen(BufferedReader consoleReader, ScreenRouter router, AccountService accountService){
         super("AccountSelectionScreen","/account_selection");
@@ -22,14 +24,15 @@ public class AccountSelectionScreen extends Screen {
         this.router = router;
         this.accountService = accountService;
         appUser = app().getActiveUser();
+        accounts = appUser.getAccounts();
     }
 
     @Override
     public void render() {
         System.out.printf("------------------------------------------------\n"+
                 "\nHello %s ,what can we do for you today??\n", Application.app().getActiveUser().getFirstName());
-        System.out.println("1) Create a brand new account");
-        System.out.println("2) Link to an existing account");
+        System.out.printf("1) Go to Active Account #%d",appUser.getActiveAccountNum());
+        System.out.println("2) Select Account to be active");
         System.out.println("3) Exit application");
 
         try{
@@ -37,26 +40,10 @@ public class AccountSelectionScreen extends Screen {
             String userSelection = consoleReader.readLine();
 
             switch (userSelection) {
-                case "1":
-                    System.out.print("How much would you like to deposit to open an account?"+"\n>");
-                    double balance = Double.parseDouble(consoleReader.readLine());
-                    System.out.print("Please enter a 4 character pin to use for the account");
-                    String pin = consoleReader.readLine();
-                    Account accountToAdd = accountService.openAccount(appUser,pin,balance);
-                    if(accountToAdd.getAccountId()==-1){
-                        System.out.println("System unable to create an account!!!!");
-                        break;
-                    }
-                    appUser.getAccounts().add(accountToAdd);
-                    break;
                 case "2":
-                    //TODO ask for account number or for username and password to select an account from another user
-                    // second level dont focus on initially is additional story
-                    System.out.println("Enter in the Account Number you would like to link to your User Account");
-                    int accountNumber = Integer.parseInt(consoleReader.readLine());
-                    if(!accountService.linkAccount(appUser,accountNumber)){
-                        System.out.printf("Account # %d is not a valid account",accountNumber);
-                    }
+                    appUser.setActiveAccountNum(selectActiveAccount());
+                case "1":
+                    router.navigate("/account_info");
                     break;
                 case "3":
                     System.out.println("Exiting application!");
@@ -74,5 +61,20 @@ public class AccountSelectionScreen extends Screen {
         if(app().isAppRunning()){
             router.navigate("/dashboard");
         }
+    }
+
+    private int selectActiveAccount()throws IOException{
+        int selection;
+        int accountsSize = accounts.size();
+        System.out.printf("Please enter which account you would like to select from 1-%d \n",);
+        for(int i=0;i<accountsSize;i++){
+            System.out.println(i+".) #"+accounts.get(i).getAccountId());
+        }
+        selection = consoleReader.read();
+        selection-=1;
+        if(selection<0 || selection>accountsSize){
+            selectActiveAccount();
+        }
+        return accounts.get(selection).getAccountId();
     }
 }

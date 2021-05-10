@@ -31,9 +31,10 @@ public class LoginService implements Service{
      }
 
      public AppUser verify(String password, String username){
+            AppUser user=null;
             if(isValidPassword(password)&&isValidUsername(username)){
-                return userDAO.findUserByUsernameAndPassword(username,password);
+                user = userDAO.findUserByUsernameAndPassword(username,password);
             }
-            return null;
+            return (user == null) ? new AppUser() : user;
      }
 }

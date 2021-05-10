@@ -11,7 +11,6 @@ import java.sql.*;
 public class AccountDAO {
 
     public AccountDAO() {
-
     }
 
     public List<Account> getAccountsByUserID(AppUser user) {

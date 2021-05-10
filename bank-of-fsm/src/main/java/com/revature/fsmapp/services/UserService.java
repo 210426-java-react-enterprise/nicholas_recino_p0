@@ -20,10 +20,7 @@ public class UserService implements Service {
     public boolean userValidation(AppUser user){
         if(user == null)
             return false;
-        if(user.getUserName() != null || user.getUserName().trim().isEmpty())
-            return false;
-
-        return true;
+        return !user.getUserName().trim().isEmpty();
     }
 
     public void init(){

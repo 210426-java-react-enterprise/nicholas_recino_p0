@@ -20,6 +20,7 @@ public class AppUser {
         accounts = new ArrayList();
         accounts.add(new Account());
         activeAccountNum = 0;
+        userID = -1;
     }
 
     @Override

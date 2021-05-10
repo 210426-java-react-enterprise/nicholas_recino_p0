@@ -10,6 +10,7 @@ import com.revature.fsmapp.screens.WelcomeScreen;
 import com.revature.fsmapp.services.LoginService;
 import com.revature.fsmapp.services.RegisterService;
 import com.revature.fsmapp.services.Service;
+import com.revature.fsmapp.services.UserService;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -28,14 +29,16 @@ public class AppState {
     public AppState(){
         System.out.println("Initializing Application...");
         appRunning = true;
+        userDAO= new UserDAO(conn = ConnectionFactory.getInstance().getConnection());
         this.consoleReader = new BufferedReader(new InputStreamReader(System.in));
 
         this.router = new ScreenRouter();
+        // Refactor to use Service handler instead of a  new instance
         this.router.addScreen(new WelcomeScreen(consoleReader, router))
-                .addScreen(new LoginScreen(consoleReader))
-                .addScreen(new RegisterScreen(consoleReader));
+                .addScreen(new LoginScreen(consoleReader,router))
+                .addScreen(new RegisterScreen(consoleReader,new UserService(userDAO),router));
 
-         userDAO= new UserDAO(conn = ConnectionFactory.getInstance().getConnection());
+
 
         services = initServices(userDAO);
 

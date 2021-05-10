@@ -15,8 +15,6 @@ public class WelcomeScreen extends Screen{
     }
     @Override
     public void render() {
-        String username;
-        String password;
         System.out.println("Welcome to The Bank of the Flying Spaghetti Monster!!!\n" +
                 "------------------------------------------------\n"+
                 "\n What task can we do for you today\n");
@@ -39,8 +37,6 @@ public class WelcomeScreen extends Screen{
                     break;
                 case "3":
                     System.out.println("Exiting application!");
-                    // we need to figure out how to tell the app the shutdown
-//                    System.exit(0); // very bad practice; force closes the JVM
                     app().setAppRunning(false);
                     break;
                 default:

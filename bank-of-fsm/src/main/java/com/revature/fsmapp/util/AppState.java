@@ -20,15 +20,6 @@ public class AppState {
     private ScreenRouter router;
     private Connection conn;
     private AppUser activeUser;
-
-    public AppUser getActiveUser() {
-        return activeUser;
-    }
-
-    public void setActiveUser(AppUser activeUser) {
-        this.activeUser = activeUser;
-    }
-
     private ServiceHandler services;
     private boolean appRunning;
     private final UserDAO userDAO;
@@ -51,8 +42,6 @@ public class AppState {
 
         System.out.println("Application Initialized...");
     }
-
-
 
     public boolean isAppRunning() {
         return appRunning;
@@ -90,4 +79,15 @@ public class AppState {
                 .addService(new RegisterService(userDAO), "/register");
     }
 
+    public AppUser getActiveUser() {
+        return activeUser;
+    }
+
+    public void setActiveUser(AppUser activeUser) {
+        this.activeUser = activeUser;
+    }
+
+    public Connection getConn() {
+        return conn;
+    }
 }

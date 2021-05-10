@@ -16,9 +16,9 @@ public class UserDAO {
     }
 
     public void saveUser(AppUser user) {
-        try{
 
-            String sql = "insert into users(username, password, first_name,last_name,email,age)" +
+        try{
+            String sql = "insert into users(username, password, first_name,last_name,email,age) " +
                     "values(?,?,?,?,?,?)";
             PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setString(1,user.getUserName());

@@ -3,7 +3,6 @@ package com.revature.fsmapp.services;
 import com.revature.fsmapp.daos.UserDAO;
 import com.revature.fsmapp.models.AppUser;
 
-import javax.jws.soap.SOAPBinding;
 import java.util.regex.Pattern;
 
 public class LoginService implements Service{

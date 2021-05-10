@@ -84,7 +84,7 @@ public class AppUser {
         this.phoneNumber = phoneNumber;
     }
 
-    public List getAccounts() {
+    public List<Account> getAccounts() {
         return accounts;
     }
 

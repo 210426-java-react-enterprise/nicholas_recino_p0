@@ -5,10 +5,7 @@ import com.revature.fsmapp.daos.UserDAO;
 import com.revature.fsmapp.exceptions.ServiceNotFoundException;
 import com.revature.fsmapp.models.AppUser;
 import com.revature.fsmapp.screens.*;
-import com.revature.fsmapp.services.LoginService;
-import com.revature.fsmapp.services.RegisterService;
-import com.revature.fsmapp.services.Service;
-import com.revature.fsmapp.services.UserService;
+import com.revature.fsmapp.services.*;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -37,7 +34,7 @@ public class AppState {
         this.router.addScreen(new WelcomeScreen(consoleReader, router))
                 .addScreen(new LoginScreen(consoleReader,router))
                 .addScreen(new RegisterScreen(consoleReader,new UserService(userDAO),router))
-                .addScreen(new UserAccountsScreen(consoleReader,router));
+                .addScreen(new UserAccountsScreen(consoleReader,router,new AccountService(accountDAO)));
 
 
 

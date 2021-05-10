@@ -27,7 +27,7 @@ public class Account {
 
     // TODO implement default table of account numbers to apply a new account number to, maybe check to see if its in use first
     public Account() {
-        accountNumber = 00000001;
+        accountNumber = -1;
         balance = 0;
         pin = "password";
     }

@@ -1,6 +1,7 @@
 package com.revature.fsmapp.screens;
 
 import com.revature.fsmapp.application.Application;
+import com.revature.fsmapp.services.AccountService;
 import com.revature.fsmapp.util.AppState;
 import com.revature.fsmapp.util.ScreenRouter;
 
@@ -11,10 +12,12 @@ import static com.revature.fsmapp.application.Application.app;
 
 public class UserAccountsScreen extends Screen {
     private ScreenRouter router;
-    public UserAccountsScreen(BufferedReader consoleReader, ScreenRouter router){
+    private AccountService accountService;
+    public UserAccountsScreen(BufferedReader consoleReader, ScreenRouter router, AccountService accountService){
         super("UserAccountsScreen","/dashboard");
         this.consoleReader = consoleReader;
         this.router = router;
+        this.accountService = accountService;
     }
     @Override
     public void render() {

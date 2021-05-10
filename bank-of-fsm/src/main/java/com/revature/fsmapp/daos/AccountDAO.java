@@ -57,10 +57,9 @@ public class AccountDAO {
         return 0;
     }
 
-    public void openAccount(int userID, String pin, double initialBalance) {
-
+    public int openAccount(int userID, String pin, double initialBalance) {
+        int newID = -1;
         try  {
-            int newID = 0;
             String sql = "insert into accounts(pin,balance,account_open) values(?,?,true)";
             PreparedStatement stmt = conn.prepareStatement(sql, new String[]{"account_id"});
             stmt.setString(1, pin);
@@ -70,12 +69,13 @@ public class AccountDAO {
                 ResultSet rs = stmt.getGeneratedKeys();
                 while (rs.next()) {
                     newID = rs.getInt("account_id");
+                    linkAccount(userID, newID);
                 }
             }
-            linkAccount(userID, newID);
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        return newID;
     }
 
     private void linkAccount(int userID, int accountID) {

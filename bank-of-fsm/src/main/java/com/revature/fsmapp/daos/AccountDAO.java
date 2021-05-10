@@ -10,11 +10,14 @@ import java.sql.*;
 
 public class AccountDAO {
 
-    public AccountDAO() {
+    private Connection conn;
+
+    public AccountDAO(Connection conn){
+        this.conn = conn;
     }
 
     public List<Account> getAccountsByUserID(AppUser user) {
-        try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
+        try{
             List<Account> accounts = new ArrayList<>();
 
             String sql = "select * from accounts_access_permissions where user_id = ?";
@@ -41,7 +44,7 @@ public class AccountDAO {
 
     public double getAccountBalance(Account account) {
         int accountNumber = account.getAccountNumber();
-        try(Connection conn = ConnectionFactory.getInstance().getConnection()){
+        try{
             String sql = "select balance from accounts where account_id = ?";
             PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setInt(1,accountNumber);
@@ -56,7 +59,7 @@ public class AccountDAO {
 
     public void openAccount(int userID, String pin, double initialBalance) {
 
-        try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
+        try  {
             int newID = 0;
             String sql = "insert into accounts(pin,balance,account_open) values(?,?,true)";
             PreparedStatement stmt = conn.prepareStatement(sql, new String[]{"account_id"});
@@ -90,7 +93,7 @@ public class AccountDAO {
     }
 
     public void setBalance(double amount, int accountID) {
-        try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
+        try {
             String sql = "update accounts set balance = ? where account_id = ?";
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setDouble(1, amount);
@@ -101,7 +104,7 @@ public class AccountDAO {
     }
 
     public boolean accountOpen(int accountID) {
-        try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
+        try{
             String sql = "select account_open from accounts where account_id = ?";
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setInt(1, accountID);

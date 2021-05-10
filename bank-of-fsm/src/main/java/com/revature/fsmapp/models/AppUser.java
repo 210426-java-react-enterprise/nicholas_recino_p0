@@ -88,7 +88,7 @@ public class AppUser {
         return accounts;
     }
 
-    public void setAccounts(ArrayList accounts) {
+    public void setAccounts(List<Account> accounts) {
         this.accounts = accounts;
     }
 

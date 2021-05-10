@@ -41,7 +41,7 @@ public class WelcomeScreen extends Screen{
                     break;
                 default:
                     System.out.println("Invalid selection, Please Try Again!!!");
-                    Thread.sleep(2000);
+                    Thread.sleep(1000);
                     render();
             }
         }catch(IOException | InterruptedException e){

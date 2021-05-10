@@ -1,12 +1,10 @@
 package com.revature.fsmapp.util;
 
+import com.revature.fsmapp.daos.AccountDAO;
 import com.revature.fsmapp.daos.UserDAO;
 import com.revature.fsmapp.exceptions.ServiceNotFoundException;
 import com.revature.fsmapp.models.AppUser;
-import com.revature.fsmapp.screens.LoginScreen;
-import com.revature.fsmapp.screens.RegisterScreen;
-import com.revature.fsmapp.screens.Screen;
-import com.revature.fsmapp.screens.WelcomeScreen;
+import com.revature.fsmapp.screens.*;
 import com.revature.fsmapp.services.LoginService;
 import com.revature.fsmapp.services.RegisterService;
 import com.revature.fsmapp.services.Service;
@@ -24,19 +22,22 @@ public class AppState {
     private ServiceHandler services;
     private boolean appRunning;
     private final UserDAO userDAO;
+    private final AccountDAO accountDAO;
     private int attemptsLeft = 0;
 
     public AppState(){
         System.out.println("Initializing Application...");
         appRunning = true;
         userDAO= new UserDAO(conn = ConnectionFactory.getInstance().getConnection());
+        accountDAO = new AccountDAO(conn = ConnectionFactory.getInstance().getConnection());
         this.consoleReader = new BufferedReader(new InputStreamReader(System.in));
 
         this.router = new ScreenRouter();
         // Refactor to use Service handler instead of a  new instance
         this.router.addScreen(new WelcomeScreen(consoleReader, router))
                 .addScreen(new LoginScreen(consoleReader,router))
-                .addScreen(new RegisterScreen(consoleReader,new UserService(userDAO),router));
+                .addScreen(new RegisterScreen(consoleReader,new UserService(userDAO),router))
+                .addScreen(new UserAccountsScreen(consoleReader,router));
 
 
 
@@ -88,6 +89,7 @@ public class AppState {
 
     public void setActiveUser(AppUser activeUser) {
         this.activeUser = activeUser;
+        this.activeUser.setAccounts(accountDAO.getAccountsByUserID(activeUser));
     }
 
     public Connection getConn() {

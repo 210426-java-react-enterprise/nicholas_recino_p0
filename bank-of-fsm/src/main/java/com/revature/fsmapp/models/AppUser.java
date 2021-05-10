@@ -13,11 +13,13 @@ public class AppUser {
     private String lastName;
     private int age;
 
-    private ArrayList accounts;
+    private List<Account> accounts;
+    private int activeAccountNum;
 
     public AppUser(){
         accounts = new ArrayList();
         accounts.add(new Account());
+        activeAccountNum = 0;
     }
 
     @Override
@@ -49,6 +51,14 @@ public class AppUser {
         this.userName = userName;
     }
 
+    public int getActiveAccountNum() {
+        return activeAccountNum;
+    }
+
+    public void setActiveAccountNum(int activeAccountNum) {
+        this.activeAccountNum = activeAccountNum;
+    }
+
     public String getUserEmail() {
         return userEmail;
     }
@@ -73,7 +83,7 @@ public class AppUser {
         this.phoneNumber = phoneNumber;
     }
 
-    public ArrayList getAccounts() {
+    public List getAccounts() {
         return accounts;
     }
 

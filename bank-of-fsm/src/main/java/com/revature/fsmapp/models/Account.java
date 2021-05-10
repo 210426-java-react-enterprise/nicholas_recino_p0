@@ -2,6 +2,7 @@ package com.revature.fsmapp.models;
 
 import com.revature.fsmapp.util.collection.ArrayList;
 import com.revature.fsmapp.util.collection.DoublyLinkedList;
+import com.revature.fsmapp.util.collection.List;
 
 // TODO Refactor String password to allow for proper User checking as an account can have more than one user
 public class Account {
@@ -9,13 +10,13 @@ public class Account {
     private int accountNumber;
     private String pin;
     private double balance;
-    private ArrayList<Transaction> transactionLog;
+    private List<Transaction> transactionLog;
 
     public Account(double balance, int accountNumber) {
         this.balance = balance;
         this.accountNumber = accountNumber;
         this.pin = "password";
-        transactionLog = new ArrayList<>();
+        transactionLog = new ArrayList<>(100);
     }
 
     public Account(double balance, int accountNumber,String pin) {

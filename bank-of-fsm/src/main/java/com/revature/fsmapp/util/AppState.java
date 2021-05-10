@@ -2,6 +2,7 @@ package com.revature.fsmapp.util;
 
 import com.revature.fsmapp.daos.UserDAO;
 import com.revature.fsmapp.exceptions.ServiceNotFoundException;
+import com.revature.fsmapp.models.AppUser;
 import com.revature.fsmapp.screens.LoginScreen;
 import com.revature.fsmapp.screens.RegisterScreen;
 import com.revature.fsmapp.screens.Screen;
@@ -18,6 +19,16 @@ public class AppState {
     private BufferedReader consoleReader;
     private ScreenRouter router;
     private Connection conn;
+    private AppUser activeUser;
+
+    public AppUser getActiveUser() {
+        return activeUser;
+    }
+
+    public void setActiveUser(AppUser activeUser) {
+        this.activeUser = activeUser;
+    }
+
     private ServiceHandler services;
     private boolean appRunning;
     private final UserDAO userDAO;

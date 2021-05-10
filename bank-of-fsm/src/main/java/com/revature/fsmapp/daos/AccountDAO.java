@@ -78,18 +78,20 @@ public class AccountDAO {
         return newID;
     }
 
-    private void linkAccount(int userID, int accountID) {
-        if(accountID == 0)
-            return;
+    public boolean linkAccount(int userID, int accountID) {
+        if(accountID == -1)
+            return false;
         try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
             String sql = "insert into account_access_permissions(user_id,account_id) values(?,?)";
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setInt(1, userID);
             stmt.setInt(2, accountID);
             stmt.executeUpdate();
+            return true;
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        return false;
     }
 
     public void setBalance(double amount, int accountID) {

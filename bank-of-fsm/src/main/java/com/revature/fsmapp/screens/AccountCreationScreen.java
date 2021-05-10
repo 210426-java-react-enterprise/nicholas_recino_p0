@@ -38,7 +38,6 @@ public class AccountCreationScreen extends Screen {
 
             switch (userSelection) {
                 case "1":
-                    //TODO create a new account from account dao and put into activeUser
                     System.out.print("How much would you like to deposit to open an account?"+"\n>");
                     double balance = Double.parseDouble(consoleReader.readLine());
                     System.out.print("Please enter a 4 character pin to use for the account");
@@ -53,7 +52,11 @@ public class AccountCreationScreen extends Screen {
                 case "2":
                     //TODO ask for account number or for username and password to select an account from another user
                     // second level dont focus on initially is additional story
-                    System.out.println("Navigating to account creation screen");
+                    System.out.println("Enter in the Account Number you would like to link to your User Account");
+                    int accountNumber = Integer.parseInt(consoleReader.readLine());
+                    if(!accountService.linkAccount(appUser,accountNumber)){
+                        System.out.printf("Account # %d is not a valid account",accountNumber);
+                    }
                     break;
                 case "3":
                     System.out.println("Exiting application!");
@@ -67,6 +70,9 @@ public class AccountCreationScreen extends Screen {
         }catch(IOException | InterruptedException e){
             // Make Call to Log File to Print Stack Trace
             e.printStackTrace();
+        }
+        if(app().isAppRunning()){
+            router.navigate("/dashboard");
         }
     }
 }

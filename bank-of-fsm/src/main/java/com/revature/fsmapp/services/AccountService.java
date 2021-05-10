@@ -33,4 +33,11 @@ public class AccountService implements Service{
     private boolean verifyValidPin(String pin){
         return (pin.length() == 4);
     }
+
+    public boolean linkAccount(AppUser appUser, int accountNumber) {
+        if(accountDAO.accountOpen(accountNumber)){
+            return accountDAO.linkAccount(appUser.getUserID(),accountNumber);
+        }
+        return false;
+    }
 }

@@ -66,7 +66,7 @@ public class AccountSelectionScreen extends Screen {
     private int selectActiveAccount()throws IOException{
         int selection;
         int accountsSize = accounts.size();
-        System.out.printf("Please enter which account you would like to select from 1-%d \n",);
+        System.out.printf("Please enter which account you would like to select from 1-%d \n",accountsSize);
         for(int i=0;i<accountsSize;i++){
             System.out.println(i+".) #"+accounts.get(i).getAccountId());
         }

@@ -6,10 +6,10 @@ import java.io.BufferedReader;
 import java.io.IOException;
 
 public class WelcomeScreen extends Screen{
-    private ScreenRouter router;
+    private final ScreenRouter router;
 
     public WelcomeScreen(BufferedReader reader, ScreenRouter router){
-        super("WelcomeScreen","/home");
+        super("WelcomeScreen","/welcome");
         consoleReader = reader;
         this.router = router;
     }
@@ -48,6 +48,5 @@ public class WelcomeScreen extends Screen{
             // Make Call to Log File to Print Stack Trace
             e.printStackTrace();
         }
-
     }
 }

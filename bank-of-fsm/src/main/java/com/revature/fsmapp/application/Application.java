@@ -8,7 +8,7 @@ public class Application {
 
     public static void main(String[] args) {
         while(app.isAppRunning()){
-            app.getRouter().navigate("/home");
+            app.getRouter().navigate("/welcome");
         }
 
     }

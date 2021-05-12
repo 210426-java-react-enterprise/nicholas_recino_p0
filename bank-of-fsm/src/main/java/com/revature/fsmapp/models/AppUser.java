@@ -8,19 +8,28 @@ public class AppUser {
     private String userName;
     private String userEmail;
     private String password;
-    private String phoneNumber;
     private String firstName;
     private String lastName;
     private int age;
 
     private List<Account> accounts;
     private int activeAccountNum;
+    private Account activeAccount;
 
     public AppUser(){
-        accounts = new ArrayList();
-        accounts.add(new Account());
-        activeAccountNum = 0;
+        accounts = new ArrayList<>();
+        activeAccountNum = -1;
         userID = -1;
+        activeAccount = new Account();
+    }
+
+    public AppUser(String userName, String userEmail, String password, String firstName, String lastName, int age) {
+        this.userName = userName;
+        this.userEmail = userEmail;
+        this.password = password;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.age = age;
     }
 
     @Override
@@ -76,14 +85,6 @@ public class AppUser {
         this.password = password;
     }
 
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
-
     public List<Account> getAccounts() {
         return accounts;
     }
@@ -115,4 +116,13 @@ public class AppUser {
     public void setAge(int age) {
         this.age = age;
     }
+
+    public Account getActiveAccount() {
+        return activeAccount;
+    }
+
+    public void setActiveAccount(Account activeAccount) {
+        this.activeAccount = activeAccount;
+    }
+
 }

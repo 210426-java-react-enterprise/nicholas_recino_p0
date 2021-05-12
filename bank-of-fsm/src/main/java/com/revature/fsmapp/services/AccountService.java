@@ -17,10 +17,13 @@ public class AccountService implements Service{
 
     public Account openAccount(AppUser user,String pin, double balance) {
         int accountID = -1;
+        Account tempAccount;
         if(verifyValidOpeningBalance(balance)&& verifyValidPin(pin)){
             accountID = accountDAO.openAccount(user.getUserID(),pin,balance);
             if(accountDAO.accountOpen(accountID)){
-                return new Account(balance,accountID,pin);
+                tempAccount = new Account(balance,accountID,pin);
+                user.setActiveAccount(tempAccount);
+                return tempAccount;
             }
         }
         return new Account();
@@ -40,4 +43,5 @@ public class AccountService implements Service{
         }
         return false;
     }
+
 }

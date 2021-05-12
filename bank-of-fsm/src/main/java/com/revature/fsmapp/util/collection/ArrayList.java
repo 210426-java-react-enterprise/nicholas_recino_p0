@@ -3,16 +3,18 @@ package com.revature.fsmapp.util.collection;
 import java.util.Arrays;
 
 public class ArrayList<E> implements List<E> {
-    private Object[] arrayList;
+    private E[] arrayList;
     private int size = 0;
 
+    @SuppressWarnings("unchecked")
     public ArrayList() {
         int DEFAULT_CAPACITY = 10;
-        this.arrayList =  new Object[DEFAULT_CAPACITY];
+        this.arrayList = (E[]) new Object[DEFAULT_CAPACITY];
     }
 
+    @SuppressWarnings("unchecked")
     public ArrayList(int capacity) {
-        this.arrayList = new Object[capacity];
+        this.arrayList = (E[])new Object[capacity];
     }
 
     /**
@@ -65,12 +67,14 @@ public class ArrayList<E> implements List<E> {
         return (E) arrayList[index];
     }
 
+
     /**
      * Removes the Element at index in the array
      * @param index The index of the Element to be removed
      */
+    @SuppressWarnings("unchecked")
     public void removeAt(int index) {
-        Object[] arrayCopy = new Object[arrayList.length - 1];
+        E[] arrayCopy = (E[]) new Object[arrayList.length - 1];
 
         for (int i = 0, j = 0; i < arrayList.length; i++) {
             if (i != index)

@@ -4,6 +4,7 @@ import com.revature.fsmapp.application.Application;
 import com.revature.fsmapp.models.Account;
 import com.revature.fsmapp.models.AppUser;
 import com.revature.fsmapp.services.AccountService;
+import com.revature.fsmapp.util.AppState;
 import com.revature.fsmapp.util.ScreenRouter;
 
 import java.io.BufferedReader;
@@ -14,14 +15,15 @@ import static com.revature.fsmapp.application.Application.app;
 public class AccountCreationScreen extends Screen {
     private ScreenRouter router;
     private AccountService accountService;
-    private AppUser appUser;
+    private  AppUser appUser;
 
     public AccountCreationScreen(BufferedReader consoleReader, ScreenRouter router, AccountService accountService){
-        super("UserAccountsScreen","/dashboard");
+        super("UserAccountsScreen","/account_creation");
         this.consoleReader = consoleReader;
         this.router = router;
         this.accountService = accountService;
-        appUser = app().getActiveUser();
+        appUser = AppState.getActiveUser();
+        System.out.println("test");
     }
 
     @Override

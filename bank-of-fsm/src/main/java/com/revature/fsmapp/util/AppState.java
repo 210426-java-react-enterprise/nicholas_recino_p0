@@ -15,31 +15,30 @@ public class AppState {
     private BufferedReader consoleReader;
     private ScreenRouter router;
     private Connection conn;
-    private AppUser activeUser;
-    private ServiceHandler services;
+    private static AppUser activeUser;
     private boolean appRunning;
-    private final UserDAO userDAO;
-    private final AccountDAO accountDAO;
+    private  UserDAO userDAO;
+    private  AccountDAO accountDAO;
     private int attemptsLeft = 0;
 
     public AppState(){
         System.out.println("Initializing Application...");
         appRunning = true;
+        activeUser = new AppUser();
         userDAO= new UserDAO(conn = ConnectionFactory.getInstance().getConnection());
         accountDAO = new AccountDAO(conn = ConnectionFactory.getInstance().getConnection());
         this.consoleReader = new BufferedReader(new InputStreamReader(System.in));
 
         this.router = new ScreenRouter();
         // Refactor to use Service handler instead of a  new instance
-        this.router.addScreen(new WelcomeScreen(consoleReader, router))
-                .addScreen(new LoginScreen(consoleReader,router))
-                .addScreen(new RegisterScreen(consoleReader,new UserService(userDAO),router))
-                .addScreen(new UserAccountsScreen(consoleReader,router,new AccountService(accountDAO)));
-
-
-
-        services = initServices(userDAO);
-
+        this.router.addScreen(new AccountCreationScreen(consoleReader,router,new AccountService(accountDAO)))
+                .addScreen(new AccountScreen(consoleReader,router,new AccountService(accountDAO)))
+                .addScreen(new AccountSelectionScreen(consoleReader,router,new AccountService(accountDAO)))
+                .addScreen(new LoginScreen(consoleReader,router,new LoginService(userDAO)))
+                .addScreen(new RegisterScreen(consoleReader,router,new RegisterService(userDAO)))
+                .addScreen(new TransactionLogScreen(consoleReader,router))
+                .addScreen(new TransactionScreen(consoleReader))
+                .addScreen(new WelcomeScreen(consoleReader,router));
 
         System.out.println("Application Initialized...");
     }
@@ -56,37 +55,15 @@ public class AppState {
         this.appRunning = appRunning;
     }
 
-    public Service getService(String serviceName){
-        Service service = null;
-        try {
-            service = services.startService(serviceName);
-            attemptsLeft = 0;
-            return service;
-        } catch (ServiceNotFoundException e) {
-            attemptsLeft++;
-            e.printStackTrace();
-            services = null;
-            services = initServices(userDAO);
-        }
-        if(attemptsLeft<4)
-            service = getService(serviceName);
-        appRunning = false;
-        return service;
-    }
-
-    private ServiceHandler initServices(UserDAO userDAO) {
-        return ServiceHandler.getInstance()
-                .addService(new LoginService(userDAO), "/login")
-                .addService(new RegisterService(userDAO), "/register");
-    }
-
-    public AppUser getActiveUser() {
+    public static AppUser getActiveUser() {
+        if(activeUser==null)
+            return new AppUser();
         return activeUser;
     }
 
     public void setActiveUser(AppUser activeUser) {
         this.activeUser = activeUser;
-        this.activeUser.setAccounts(accountDAO.getAccountsByUserID(activeUser));
+//        this.activeUser.setAccounts(accountDAO.getAccountsByUserID(activeUser));
     }
 
     public Connection getConn() {

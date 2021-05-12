@@ -12,15 +12,11 @@ public class LoginScreen extends Screen {
     LoginService service;
     ScreenRouter router;
 
-    public LoginScreen(BufferedReader reader, ScreenRouter router){
+    public LoginScreen(BufferedReader reader, ScreenRouter router, LoginService service){
         super("LoginScreen","/login");
         consoleReader = reader;
         this.router = router;
-        if(app().getService("/login") instanceof  LoginService){
-            service = (LoginService) app().getService("/login");
-        }else{
-            service = null;
-        }
+        this.service = service;
     }
     @Override
     public void render() {
@@ -34,12 +30,11 @@ public class LoginScreen extends Screen {
         System.out.println("Welcome to The Bank of the Flying Spaghetti Monster!!!\n" +
                 "------------------------------------------------\n"+
                 "\n Please Enter Your Information:\n");
-        System.out.println("Please Enter Username: ");
         try{
-            System.out.println("Please Enter Username: ");
+            System.out.print("Please Enter Username: ");
             username = consoleReader.readLine();
 
-            System.out.println("Please Enter Password: ");
+            System.out.print("Please Enter Password: ");
             password = consoleReader.readLine();
             user = service.verify(password,username);
             if(user.getUserID() != -1){

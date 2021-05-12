@@ -1,9 +1,11 @@
 package com.revature.fsmapp.screens;
 
+import com.revature.fsmapp.application.Application;
 import com.revature.fsmapp.exceptions.DuplicateAccountException;
 import com.revature.fsmapp.models.AppUser;
 import com.revature.fsmapp.services.RegisterService;
 import com.revature.fsmapp.services.UserService;
+import com.revature.fsmapp.util.AppState;
 import com.revature.fsmapp.util.ScreenRouter;
 
 import java.io.BufferedReader;
@@ -39,7 +41,7 @@ public class RegisterScreen extends Screen {
             System.out.print("Please Enter Password: ");
             password = consoleReader.readLine();
 
-            System.out.print("Please Enter Your Email");
+            System.out.print("Please Enter Your Email: ");
             email = consoleReader.readLine();
 
             if(!registerService.validatePotentialUserInfo(password,username,email)){
@@ -48,10 +50,10 @@ public class RegisterScreen extends Screen {
 
             System.out.print("Please Enter Your First Name: ");
             firstName = consoleReader.readLine();
-            System.out.print("Please Enter Your Last Name");
+            System.out.print("Please Enter Your Last Name: ");
             lastName = consoleReader.readLine();
-            System.out.print("Please Enter Your Age, note you must be 13 or older to create an account");
-            age = consoleReader.read();
+            System.out.print("Please Enter Your Age, note you must be 13 or older to create an account: ");
+            age = Integer.parseInt(consoleReader.readLine());
 
             user.setUserName(username);
             user.setPassword(password);
@@ -61,8 +63,9 @@ public class RegisterScreen extends Screen {
             user.setAge(age);
 
             if(registerService.registerUser(user)){
-                app().setActiveUser(user);
-                router.navigate("/dashboard");
+                AppState.setActiveUser(user);
+                System.out.println("Navigating to the Account Creation Screen");
+                router.navigate("/account_creation");
             }
 
         } catch (IOException e) {

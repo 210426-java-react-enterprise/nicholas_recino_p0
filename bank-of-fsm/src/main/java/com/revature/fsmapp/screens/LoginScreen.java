@@ -2,6 +2,7 @@ package com.revature.fsmapp.screens;
 
 import com.revature.fsmapp.models.AppUser;
 import com.revature.fsmapp.services.LoginService;
+import com.revature.fsmapp.util.AppState;
 import com.revature.fsmapp.util.ScreenRouter;
 
 import static com.revature.fsmapp.application.Application.app;
@@ -20,14 +21,10 @@ public class LoginScreen extends Screen {
     }
     @Override
     public void render() {
-        if(service == null){
-            System.err.println("Application forcibly closed due to service failure");
-            return;
-        }
         String username;
         String password;
         AppUser user;
-        System.out.println("Welcome to The Bank of the Flying Spaghetti Monster!!!\n" +
+        System.out.println("\nWelcome to The Bank of the Flying Spaghetti Monster!!!\n" +
                 "------------------------------------------------\n"+
                 "\n Please Enter Your Information:\n");
         try{
@@ -38,8 +35,10 @@ public class LoginScreen extends Screen {
             password = consoleReader.readLine();
             user = service.verify(password,username);
             if(user.getUserID() != -1){
-                app().setActiveUser(user);
+                AppState.setActiveUser(user);
                 router.navigate("/dashboard");
+            }else{
+                System.err.println("Incorrect Username or Password Given Please Try Again!!!\n\n");
             }
         }catch(IOException e){
             // Make Call to Log File to Print Stack Trace

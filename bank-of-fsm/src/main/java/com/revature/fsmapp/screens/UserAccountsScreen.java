@@ -23,7 +23,7 @@ public class UserAccountsScreen extends Screen {
     public void render() {
         System.out.printf("Welcome to The Bank of the Flying Spaghetti Monster!!!\n" +
                 "------------------------------------------------\n"+
-                "\nHello %s ,what can we do for you today??\n", Application.app().getActiveUser().getFirstName());
+                "\nHello %s ,what can we do for you today??\n", AppState.getActiveUser().getFirstName());
         System.out.println("1) View Account(s)");
         System.out.println("2) Create an Account");
         System.out.println("3) Exit application");
@@ -35,7 +35,7 @@ public class UserAccountsScreen extends Screen {
             switch (userSelection) {
                 case "1":
                     System.out.println("Navigating to account selection screen");
-                    router.navigate("/acccount_selection");
+                    router.navigate("/account_selection");
                     break;
                 case "2":
                     System.out.println("Navigating to account creation screen");

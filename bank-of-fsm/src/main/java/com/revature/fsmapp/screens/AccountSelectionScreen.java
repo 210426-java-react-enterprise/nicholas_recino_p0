@@ -31,7 +31,7 @@ public class AccountSelectionScreen extends Screen {
     public void render() {
         System.out.printf("------------------------------------------------\n"+
                 "\nHello %s ,what can we do for you today??\n", Application.app().getActiveUser().getFirstName());
-        System.out.printf("1) Go to Active Account #%d",appUser.getActiveAccountNum());
+        System.out.printf("1) Go to Active Account #%d \n",appUser.getActiveAccountNum());
         System.out.println("2) Select Account to be active");
         System.out.println("3) Exit application");
 

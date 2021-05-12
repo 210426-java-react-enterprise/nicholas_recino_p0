@@ -38,6 +38,7 @@ public class AppState {
                 .addScreen(new RegisterScreen(consoleReader,router,new RegisterService(userDAO)))
                 .addScreen(new TransactionLogScreen(consoleReader,router))
                 .addScreen(new TransactionScreen(consoleReader))
+                .addScreen(new UserAccountsScreen(consoleReader,router,new AccountService(accountDAO)))
                 .addScreen(new WelcomeScreen(consoleReader,router));
 
         System.out.println("Application Initialized...");
@@ -61,9 +62,10 @@ public class AppState {
         return activeUser;
     }
 
-    public void setActiveUser(AppUser activeUser) {
-        this.activeUser = activeUser;
+    public static void setActiveUser(AppUser user) {
+        activeUser = user;
 //        this.activeUser.setAccounts(accountDAO.getAccountsByUserID(activeUser));
+        System.out.println("Test");
     }
 
     public Connection getConn() {

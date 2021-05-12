@@ -20,7 +20,7 @@ public class AppUser {
         accounts = new ArrayList<>();
         activeAccountNum = -1;
         userID = -1;
-        activeAccount = new Account();
+        activeAccount = null;
     }
 
     public AppUser(String userName, String userEmail, String password, String firstName, String lastName, int age) {
@@ -123,6 +123,7 @@ public class AppUser {
 
     public void setActiveAccount(Account activeAccount) {
         this.activeAccount = activeAccount;
+        setActiveAccountNum(activeAccount.getAccountId());
     }
 
 }

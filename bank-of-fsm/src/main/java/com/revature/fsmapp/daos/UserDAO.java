@@ -45,6 +45,7 @@ public class UserDAO {
             e.printStackTrace();
             return false;
         }
+        System.out.println("--------------------");
         return true;
     }
 // TODO need to implement a selective update

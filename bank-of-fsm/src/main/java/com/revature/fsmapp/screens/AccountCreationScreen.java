@@ -22,14 +22,13 @@ public class AccountCreationScreen extends Screen {
         this.consoleReader = consoleReader;
         this.router = router;
         this.accountService = accountService;
-        appUser = AppState.getActiveUser();
-        System.out.println("test");
     }
 
     @Override
     public void render() {
+        appUser = AppState.getActiveUser();
         System.out.printf("------------------------------------------------\n"+
-                "\nHello %s ,what can we do for you today??\n", Application.app().getActiveUser().getFirstName());
+                "\nHello %s ,what can we do for you today??\n",AppState.getActiveUser().getFirstName());
         System.out.println("1) Create a brand new account");
         System.out.println("2) Link to an existing account");
         System.out.println("3) Exit application");
@@ -44,19 +43,19 @@ public class AccountCreationScreen extends Screen {
                     double balance = Double.parseDouble(consoleReader.readLine());
                     System.out.print("Please enter a 4 character pin to use for the account");
                     String pin = consoleReader.readLine();
-                    Account accountToAdd = accountService.openAccount(appUser,pin,balance);
+                    Account accountToAdd = accountService.openAccount(AppState.getActiveUser(),pin,balance);
                     if(accountToAdd.getAccountId()==-1){
                         System.out.println("System unable to create an account!!!!");
-                        break;
                     }
                     appUser.getAccounts().add(accountToAdd);
+                    appUser.setActiveAccount(accountToAdd);
                     break;
                 case "2":
                     //TODO ask for account number or for username and password to select an account from another user
                     // second level dont focus on initially is additional story
                     System.out.println("Enter in the Account Number you would like to link to your User Account");
                     int accountNumber = Integer.parseInt(consoleReader.readLine());
-                    if(!accountService.linkAccount(appUser,accountNumber)){
+                    if(!accountService.linkAccount(AppState.getActiveUser(),accountNumber)){
                         System.out.printf("Account # %d is not a valid account",accountNumber);
                     }
                     break;

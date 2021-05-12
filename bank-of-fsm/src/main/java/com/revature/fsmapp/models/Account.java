@@ -27,7 +27,7 @@ public class Account {
 
     // TODO implement default table of account numbers to apply a new account number to, maybe check to see if its in use first
     public Account() {
-        accountNumber = -1;
+        accountId = accountNumber = -1;
         balance = 0;
         pin = "password";
     }
@@ -70,7 +70,7 @@ public class Account {
     //  Verifies Account Password prior to changing account number
     public void setAccountNumber(int accountNumber,String password) {
         if(this.pin.equals(password)) {
-            this.accountNumber = accountNumber;
+            this.accountNumber = this.accountId = accountNumber;
         }else{
             System.err.println("Proper credentials required, please re-enter password!!!!");
         }

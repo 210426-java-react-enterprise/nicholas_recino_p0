@@ -44,7 +44,7 @@ public void testInValidatePotentialUserInfo(){
     when(mockUserDAO.findUserByEmail(anyString())).thenReturn(new AppUser());
 
     boolean test = sut.validatePotentialUserInfo("password!","JohnDoe123","nickrecino@gmail.com");
-    
+
     assertFalse(test);
 } 
 

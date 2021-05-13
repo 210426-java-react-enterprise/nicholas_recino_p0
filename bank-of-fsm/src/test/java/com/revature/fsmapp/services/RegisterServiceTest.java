@@ -39,13 +39,13 @@ public class RegisterServiceTest {
 * 
 */ 
 @Test
-public void testValidatePotentialUserInfo(){
+public void testInValidatePotentialUserInfo(){
     when(mockUserDAO.findUserByUsernameAndPassword(anyString(),anyString())).thenReturn(new AppUser());
     when(mockUserDAO.findUserByEmail(anyString())).thenReturn(new AppUser());
 
     boolean test = sut.validatePotentialUserInfo("password!","JohnDoe123","nickrecino@gmail.com");
-
-    assertTrue(test);
+    
+    assertFalse(test);
 } 
 
 /** 

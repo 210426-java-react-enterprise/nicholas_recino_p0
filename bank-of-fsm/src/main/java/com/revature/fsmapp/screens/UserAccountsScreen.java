@@ -33,10 +33,9 @@ public class UserAccountsScreen extends Screen {
         System.out.printf("User Dashboard\n" +
                 "------------------------------------------------\n"+
                 "\nHello %s ,what can we do for you today??\n", activeUser.getFirstName());
-        System.out.println("1) View Account(s)");
+        System.out.println("1) View Account");
         System.out.println("2) Create an Account");
-        System.out.println("3) Link to an Existing Account");
-        System.out.println("4) Exit application");
+        System.out.println("3) Exit application");
 
         try{
             System.out.print("> ");
@@ -54,6 +53,7 @@ public class UserAccountsScreen extends Screen {
                         System.out.printf("Account ID: %d\n",account.getAccountNumber());
                         System.out.printf("Current Balance: $%.2f\n---------------------------\n",account.getBalance());
                         try{
+                            System.out.print("Please enter the account ID you wish to select: ");
                             int accountNumToGet = Integer.parseInt(consoleReader.readLine());
                             accountSelection = accountService.validateAccount(accounts,accountNumToGet);
                             cache.setActiveAccount(accountSelection);
@@ -78,19 +78,20 @@ public class UserAccountsScreen extends Screen {
                     accounts.add(accountToAdd);
                     activeUser.setAccounts(accounts);
                     activeUser.setActiveAccount(accountToAdd);
+                    cache.setActiveAccount(accountToAdd);
                     router.navigate("/account_info");
                     break;
+//                case "3":
+//                    //TODO ask for account number or for username and password to select an account from another user
+//                    // second level dont focus on initially is additional story
+//                    System.out.println("Enter in the Account Number you would like to link to your User Account");
+//                    int accountNumber = Integer.parseInt(consoleReader.readLine());
+//                    if(!accountService.linkAccount(AppState.getActiveUser(),accountNumber)){
+//                        System.out.printf("Account # %d is not a valid account",accountNumber);
+//                    }
+//                    render();
+//                    break;
                 case "3":
-                    //TODO ask for account number or for username and password to select an account from another user
-                    // second level dont focus on initially is additional story
-                    System.out.println("Enter in the Account Number you would like to link to your User Account");
-                    int accountNumber = Integer.parseInt(consoleReader.readLine());
-                    if(!accountService.linkAccount(AppState.getActiveUser(),accountNumber)){
-                        System.out.printf("Account # %d is not a valid account",accountNumber);
-                    }
-                    render();
-                    break;
-                case "4":
                     System.out.println("Exiting application!");
                     app().setAppRunning(false);
                     break;

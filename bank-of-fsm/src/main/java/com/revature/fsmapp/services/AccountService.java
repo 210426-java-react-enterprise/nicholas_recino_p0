@@ -15,10 +15,7 @@ public class AccountService implements Service{
     public AccountService(AccountDAO accountDAO){
         this.accountDAO = accountDAO;
     }
-    @Override
-    public void init() {
 
-    }
 
     public Account openAccount(AppUser user,String pin, double balance) {
         int accountID = -1;
@@ -75,7 +72,7 @@ public class AccountService implements Service{
             return;
         if(account.getBalance()-amount < 0)
             throw new InsufficientResourcesException();
-        accountDAO.subtractBalance(amount,accountID);
+        accountDAO.subtractBalance(amount,accountID,account);
         account.setBalance(account.getBalance()-amount);
     }
 

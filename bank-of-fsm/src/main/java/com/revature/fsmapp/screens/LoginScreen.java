@@ -3,6 +3,7 @@ package com.revature.fsmapp.screens;
 import com.revature.fsmapp.models.AppUser;
 import com.revature.fsmapp.services.LoginService;
 import com.revature.fsmapp.util.AppState;
+import com.revature.fsmapp.util.Cache;
 import com.revature.fsmapp.util.ScreenRouter;
 
 import static com.revature.fsmapp.application.Application.app;
@@ -10,14 +11,16 @@ import java.io.BufferedReader;
 import java.io.IOException;
 
 public class LoginScreen extends Screen {
-    LoginService service;
-    ScreenRouter router;
+    private LoginService service;
+    private ScreenRouter router;
+    private Cache cache;
 
-    public LoginScreen(BufferedReader reader, ScreenRouter router, LoginService service){
+    public LoginScreen(BufferedReader reader, ScreenRouter router,Cache cache, LoginService service){
         super("LoginScreen","/login");
         consoleReader = reader;
         this.router = router;
         this.service = service;
+        this.cache = cache;
     }
     @Override
     public void render() {
@@ -35,7 +38,7 @@ public class LoginScreen extends Screen {
             password = consoleReader.readLine();
             user = service.verify(password,username);
             if(user.getUserID() != -1){
-                AppState.setActiveUser(user);
+                cache.setActiveUser(user);
                 router.navigate("/dashboard");
             }else{
                 System.err.println("Incorrect Username or Password Given Please Try Again!!!\n\n");

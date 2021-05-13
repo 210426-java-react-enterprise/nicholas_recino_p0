@@ -31,11 +31,14 @@ public class AppState {
         accountDAO = new AccountDAO(conn = ConnectionFactory.getInstance().getConnection());
         this.consoleReader = new BufferedReader(new InputStreamReader(System.in));
         cache = new Cache();
+        accountService = new AccountService(accountDAO);
+        loginService = new LoginService(userDAO);
+        registerService = new RegisterService(userDAO);
 
         this.router = new ScreenRouter();
         this.router
                 .addScreen(new AccountScreen(consoleReader,router,cache,accountService))
-                .addScreen(new LoginScreen(consoleReader,router,loginService))
+                .addScreen(new LoginScreen(consoleReader,router,cache, loginService))
                 .addScreen(new RegisterScreen(consoleReader,router,cache,registerService))
                 .addScreen(new UserAccountsScreen(consoleReader,router,cache,accountService))
                 .addScreen(new WelcomeScreen(consoleReader,router));

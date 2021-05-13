@@ -47,10 +47,4 @@ public class RegisterService implements Service{
         return(userDAO.saveUser(user));
     }
 
-
-
-    @Override
-    public void init() {
-
-    }
 }

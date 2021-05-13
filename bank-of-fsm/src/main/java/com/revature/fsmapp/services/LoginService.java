@@ -15,20 +15,18 @@ public class LoginService implements Service{
     }
 
     private boolean isValidUsername(String username){
-        if(username.length()<8)
+        if(username.length()<7)
             return false;
         return(userNamePattern.matcher(username).matches());
     }
 
      private boolean isValidPassword(String password){
-        if(password.length()<8)
+        if(password.length()<7)
             return false;
         return(passwordPattern.matcher(password).matches());
      }
 
-     public void init(){
 
-     }
 
      public AppUser verify(String password, String username){
             AppUser user=null;

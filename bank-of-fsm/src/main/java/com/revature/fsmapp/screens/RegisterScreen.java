@@ -10,8 +10,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 
 public class RegisterScreen extends Screen {
-    private final ScreenRouter router;
-    private  final RegisterService registerService;
+    private  ScreenRouter router;
+    private  RegisterService registerService;
     private Cache cache;
 
     public RegisterScreen(BufferedReader consoleReader, ScreenRouter router,Cache cache, RegisterService service) {

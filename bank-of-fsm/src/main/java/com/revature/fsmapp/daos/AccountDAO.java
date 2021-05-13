@@ -11,19 +11,33 @@ import java.sql.*;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
+/**
+ * The type Account dao.
+ */
 public class AccountDAO {
 
     private Connection conn;
 
+    /**
+     * Instantiates a new Account dao.
+     *
+     * @param conn the conn
+     */
     public AccountDAO(Connection conn){
         this.conn = conn;
     }
 
+    /**
+     * Gets accounts by user id.
+     *
+     * @param user the user
+     * @return the accounts by user id
+     */
     public List<Account> getAccountsByUserID(AppUser user) {
         try{
             List<Account> accounts = new ArrayList<>();
 
-            String sql = "select * from accounts_access_permissions where user_id = ?";
+            String sql = "select * from accounts where user_id = ?";
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setInt(1, user.getUserID());
 
@@ -45,6 +59,12 @@ public class AccountDAO {
         return new ArrayList<>();
     }
 
+    /**
+     * Account exists boolean.
+     *
+     * @param accountID the account id
+     * @return the boolean
+     */
     public boolean accountExists(int accountID) {
 
         try {
@@ -64,6 +84,12 @@ public class AccountDAO {
         return false;
     }
 
+    /**
+     * Gets account balance.
+     *
+     * @param account the account
+     * @return the account balance
+     */
     public double getAccountBalance(Account account) {
         int accountNumber = account.getAccountNumber();
         try{
@@ -71,6 +97,7 @@ public class AccountDAO {
             PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setInt(1,accountNumber);
             ResultSet rs = pstmt.executeQuery();
+            rs.next();
             return rs.getDouble("balance");
 
         }catch(SQLException e){
@@ -79,13 +106,22 @@ public class AccountDAO {
         return 0;
     }
 
+    /**
+     * Open account int.
+     *
+     * @param userID         the user id
+     * @param pin            the pin
+     * @param initialBalance the initial balance
+     * @return the Account ID
+     */
     public int openAccount(int userID, String pin, double initialBalance) {
         int newID = -1;
         try  {
-            String sql = "insert into accounts(pin,balance,account_open) values(?,?,true)";
+            String sql = "insert into accounts(pin,balance,account_open,user_id) values(?,?,true,?)";
             PreparedStatement stmt = conn.prepareStatement(sql, new String[]{"account_id"});
             stmt.setString(1, pin);
             stmt.setDouble(2, initialBalance);
+            stmt.setInt(3,userID);
             int rowsAffected = stmt.executeUpdate();
             if (rowsAffected != 0) {
                 ResultSet rs = stmt.getGeneratedKeys();
@@ -100,6 +136,13 @@ public class AccountDAO {
         return newID;
     }
 
+    /**
+     * Link account boolean.
+     *
+     * @param userID    the user id
+     * @param accountID the account id
+     * @return Whether Account is linked validly or not
+     */
     public boolean linkAccount(int userID, int accountID) {
         if(accountID == -1)
             return false;
@@ -116,6 +159,12 @@ public class AccountDAO {
         return false;
     }
 
+    /**
+     * Sets balance.
+     *
+     * @param amount    the amount
+     * @param accountID the account id
+     */
     public void setBalance(double amount, int accountID) {
         try {
             String sql = "update accounts set balance = ? where account_id = ?";
@@ -127,6 +176,12 @@ public class AccountDAO {
         }
     }
 
+    /**
+     * Returns true when account is still open.
+     *
+     * @param accountID the account id
+     * @return the boolean
+     */
     public boolean accountOpen(int accountID) {
         try{
             String sql = "select account_open from accounts where account_id = ?";
@@ -142,6 +197,12 @@ public class AccountDAO {
         return false;
     }
 
+    /**
+     * Add balance to Account specified by accountID.
+     *
+     * @param amount    the amount
+     * @param accountID the account id
+     */
     public void addBalance(double amount, int accountID) {
 
         try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
@@ -158,13 +219,20 @@ public class AccountDAO {
         }
     }
 
-    public void subtractBalance(double amount, int accountID) {
+    /**
+     * Subtract balance from Account specified by accountID.
+     *
+     * @param amount    the amount
+     * @param accountID the account id
+     */
+    public void subtractBalance(double amount, int accountID,Account account) {
+        double balance = account.getBalance()-amount;
 
         try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
-            String query = "update accounts set balance = balance - ? where account_id = ?";
+            String query = "update accounts set balance = ? where account_id = ?";
 
             PreparedStatement stmt = conn.prepareStatement(query);
-            stmt.setDouble(1, amount);
+            stmt.setDouble(1, balance);
             stmt.setInt(2, accountID);
 
             int rowsUpdated = stmt.executeUpdate();
@@ -173,6 +241,15 @@ public class AccountDAO {
         }
     }
 
+    /**
+     * Save transaction on the database.
+     *
+     * @param sender      the sender
+     * @param senderID    the sender id
+     * @param recipientID the recipient id
+     * @param amount      the amount
+     * @return Transaction object to store in an array list to keep a record of.
+     */
     public Optional<Transaction> saveTransaction(String sender, int senderID,int recipientID,double amount) {
 
         Optional<Transaction> _transaction = Optional.empty();

@@ -8,16 +8,31 @@ public class AppUser {
     private String userName;
     private String userEmail;
     private String password;
-    private String phoneNumber;
     private String firstName;
     private String lastName;
     private int age;
 
-    private ArrayList accounts;
+    private List<Account> accounts;
+    private int activeAccountNum;
+    private Account activeAccount;
 
     public AppUser(){
-        accounts = new ArrayList();
-        accounts.add(new Account());
+        accounts = new ArrayList<>();
+        activeAccountNum = -1;
+        userID = -1;
+        activeAccount = null;
+    }
+
+    public AppUser(String userName, String userEmail, String password, String firstName, String lastName, int age) {
+        this.userName = userName;
+        this.userEmail = userEmail;
+        this.password = password;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.age = age;
+        activeAccount = null;
+        activeAccountNum = -1;
+        userID = -1;
     }
 
     @Override
@@ -49,6 +64,14 @@ public class AppUser {
         this.userName = userName;
     }
 
+    public int getActiveAccountNum() {
+        return activeAccountNum;
+    }
+
+    public void setActiveAccountNum(int activeAccountNum) {
+        this.activeAccountNum = activeAccountNum;
+    }
+
     public String getUserEmail() {
         return userEmail;
     }
@@ -65,19 +88,11 @@ public class AppUser {
         this.password = password;
     }
 
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
-
-    public ArrayList getAccounts() {
+    public List<Account> getAccounts() {
         return accounts;
     }
 
-    public void setAccounts(ArrayList accounts) {
+    public void setAccounts(List<Account> accounts) {
         this.accounts = accounts;
     }
 
@@ -104,4 +119,14 @@ public class AppUser {
     public void setAge(int age) {
         this.age = age;
     }
+
+    public Account getActiveAccount() {
+        return activeAccount;
+    }
+
+    public void setActiveAccount(Account activeAccount) {
+        this.activeAccount = activeAccount;
+        setActiveAccountNum(activeAccount.getAccountId());
+    }
+
 }

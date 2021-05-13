@@ -30,3 +30,9 @@ target/
 
 #Ignore Properties Files
 *.properties
+
+#Ignore Important SQL Files While Allowing Needed SQL Files
+TableFormation.sql
+
+#Ignore DrawIO ERD
+*.drawio

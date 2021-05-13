@@ -10,7 +10,7 @@ import java.util.Properties;
 public class ConnectionFactory {
 
     private static ConnectionFactory connectionFactory;
-    private Properties props = new Properties();
+    private final Properties props = new Properties();
 
     static{
         try{
@@ -40,11 +40,12 @@ public class ConnectionFactory {
     public Connection getConnection(){
         Connection conn = null;
         try{
-            conn = DriverManager.getConnection(props.getProperty("host-url"),
+            conn = DriverManager.getConnection(
+                    props.getProperty("host-url"),
                     props.getProperty("username"),
                     props.getProperty("password"));
         }catch(SQLException e){
-
+            e.printStackTrace();
         }
         return  conn;
     }

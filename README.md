@@ -21,7 +21,7 @@ As a user I can:
 - [x] Proper use of OOP principles
 - [ ] Documentation (all classes and methods have basic documentation)
 - [x] Use of custom data structures (do not use java.util Collection types!)
-- [ ] SQL Data Persistance (at least 3 tables; all 3NF (normal form))
+- [x] SQL Data Persistance (at least 3 tables; all 3NF (normal form))
 #### Bonus Features
 - [ ] Unit tests for persistance-layer classes
 - [ ] Logging messages and exceptions to a file

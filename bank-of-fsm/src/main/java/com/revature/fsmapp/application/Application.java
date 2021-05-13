@@ -7,8 +7,9 @@ public class Application {
     private static AppState app = new AppState();
 
     public static void main(String[] args) {
+        app().getRouter().navigate("/welcome");
         while(app.isAppRunning()){
-            app.getRouter().navigate("/home");
+            app.getRouter().getCurrentScreen().render();
         }
 
     }

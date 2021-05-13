@@ -1,8 +1,11 @@
 package com.revature.fsmapp.services; 
 
 import com.revature.fsmapp.daos.AccountDAO;
+import com.revature.fsmapp.models.Account;
+import com.revature.fsmapp.models.AppUser;
 import org.junit.*;
 import static org.mockito.Mockito.*;
+import static org.junit.Assert.*;
 
 /** 
 * AccountService Tester. 
@@ -33,18 +36,21 @@ public void after(){
 * 
 */ 
 @Test
-public void testOpenAccount(){ 
-//TODO: Test goes here... 
-} 
+public void testOpenAccount(){
+    String pin = "1234";
+    AppUser user = new AppUser();
+    double amount = 100;
+    Account expectedAccount = new Account(amount,-1,pin);
 
-/** 
-* 
-* Method: linkAccount(AppUser appUser, int accountNumber) 
-* 
-*/ 
-@Test
-public void testLinkAccount(){ 
-//TODO: Test goes here... 
+    Account actualAccount = null;
+    when(mockAccountDAO.accountExists(anyInt())).thenReturn(true);
+    when(mockAccountDAO.accountOpen(anyInt())).thenReturn(true);
+
+    actualAccount = sut.openAccount(user,pin,amount);
+
+    assertEquals(expectedAccount.getAccountId(),actualAccount.getAccountId());
+
+
 } 
 
 /** 
@@ -69,26 +75,6 @@ public void testValidateAccount(){
 
 /** 
 * 
-* Method: recordTransaction(String sender, int sendersID, int recipientID, double amount) 
-* 
-*/ 
-@Test
-public void testRecordTransaction(){ 
-//TODO: Test goes here... 
-} 
-
-/** 
-* 
-* Method: accountExists(int accountID) 
-* 
-*/ 
-@Test
-public void testAccountExists(){ 
-//TODO: Test goes here... 
-} 
-
-/** 
-* 
 * Method: subtractBalance(double amount, int accountID, Account account) 
 * 
 */ 
@@ -105,47 +91,6 @@ public void testSubtractBalance(){
 @Test
 public void testAddBalance(){ 
 //TODO: Test goes here... 
-} 
-
-
-/** 
-* 
-* Method: verifyValidOpeningBalance(double balance) 
-* 
-*/ 
-@Test
-public void testVerifyValidOpeningBalance(){ 
-//TODO: Test goes here... 
-/* 
-try { 
-   Method method = AccountService.getClass().getMethod("verifyValidOpeningBalance", double.class); 
-   method.setAccessible(true); 
-   method.invoke(<Object>, <Parameters>); 
-} catch(NoSuchMethodException e) { 
-} catch(IllegalAccessException e) { 
-} catch(InvocationTargetException e) { 
-} 
-*/ 
-} 
-
-/** 
-* 
-* Method: verifyValidPin(String pin) 
-* 
-*/ 
-@Test
-public void testVerifyValidPin(){ 
-//TODO: Test goes here... 
-/* 
-try { 
-   Method method = AccountService.getClass().getMethod("verifyValidPin", String.class); 
-   method.setAccessible(true); 
-   method.invoke(<Object>, <Parameters>); 
-} catch(NoSuchMethodException e) { 
-} catch(IllegalAccessException e) { 
-} catch(InvocationTargetException e) { 
-} 
-*/ 
 } 
 
 } 

@@ -1,184 +1,174 @@
-package com.revature.fsmapp.util.collection; 
+package com.revature.fsmapp.util.collection;
 
-import org.junit.*;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 
-/** 
-* ArrayList Tester. 
-* 
-* @author Nicholas Recino 
-* @since May 5, 2021
-* @version 1.0 
-*/ 
+import java.util.Iterator;
+
+import static org.junit.Assert.*;
+
 public class ArrayListTest {
 
-    private ArrayList<String> sut;
+    private ArrayList<Integer> sut;
 
-@Before
-public void before() {
-   sut = new ArrayList<>();
-} 
-
-@After
-public void after(){
-    sut = null;
-} 
-
-/** 
-* 
-* Method: add(E objectToAdd) 
-* 
-*/ 
-@Test
-public void testAdd(){ 
-    //Arrange
-    int expectedSize = 1;
-    //Act
-    sut.add("Test");
-    //Assert
-    Assert.assertEquals(expectedSize,sut.size());
-} 
-
-/** 
-* 
-* Method: contains(E object) 
-* 
-*/ 
-@Test
-public void testActuallyContains(){
-    //Arrange
-    sut.add("Test3");
-    sut.add("Test4");
-    sut.add("Test1");
-    sut.add("Test2");
-    sut.add("Test3");
-    sut.add("Test4");
-    //Act
-    boolean contained = sut.contains("Test3");
-    //Assert
-    Assert.assertTrue(contained);
-}
-    /**
-     *
-     * Method: contains(E object)
-     *
-     */
-    @Test
-    public void testNotContains(){
-        //Arrange
-        sut.add("Test3");
-        sut.add("Test4");
-        sut.add("Test1");
-        sut.add("Test2");
-        sut.add("Test3");
-        sut.add("Test4");
-        //Act
-        boolean contained = sut.contains("Test7");
-        //Assert
-        Assert.assertFalse(contained);
+    @Before
+    public void setup() {
+        sut = new ArrayList<>();
     }
 
-    /**
-* 
-* Method: size() 
-* 
-*/ 
-@Test
-public void testSize(){
-    //Arrange
-    int expectedSize = 4;
-    sut.add("Test1");
-    sut.add("Test2");
-    sut.add("Test3");
-    sut.add("Test4");
-    //Act
-    int currentSize = sut.size();
-    //Assert
-    Assert.assertEquals(expectedSize,currentSize);
-} 
+    @After
+    public void teardown() {
+        sut = null;
+    }
 
-/** 
-* 
-* Method: get(int index) 
-* 
-*/ 
-@Test(expected = IndexOutOfBoundsException.class)
-public void testGetWithIndexPastBounds(){
-    //Arrange
-    int incorrectIndex = 5;
-    sut.add("Test1");
-    sut.add("Test2");
-    sut.add("Test3");
-    sut.add("Test4");
-    //Act
-    sut.get(incorrectIndex);
-    //Assert
+    @Test
+    public void test_add() {
+        //arrange;
+        sut.add(1);
+        sut.add(2);
+
+        //Act
+        sut.add(3);
+        int expectedResult = 3;
+        int actualResult = 0;
+        actualResult = sut.size();
+
+        //Assert
+        assertEquals(expectedResult, actualResult);
+    }
+
+    @Test
+    public void test_getWithValidIndex() {
+        //Arrange
+        sut.add(1);
+        sut.add(2);
+        sut.add(3);
+
+
+        //Act
+        int expectedResult = 2; // the second element of the array
+        int actualResult = 0;
+        actualResult = sut.get(1); // zero-based
+
+        //Assert
+        assertEquals(expectedResult, actualResult);
+    }
+
+    @Test
+    public void test_getWithInvalidIndexPositive() {
+        //Arrange
+        sut.add(1);
+        sut.add(2);
+        sut.add(3);
+
+        try {
+            sut.get(3); // get the 4th index that does not exist
+        } catch (Exception e) {
+            assertTrue(e instanceof IndexOutOfBoundsException);
+        }
+    }
+
+    @Test
+    public void test_getWithInvalidIndexNegative() {
+        //Arrange
+        sut.add(1);
+        sut.add(2);
+        sut.add(3);
+
+        try {
+            sut.get(-1); //try to get a negative index
+        } catch (Exception e) {
+            assertTrue(e instanceof IndexOutOfBoundsException);
+        }
+    }
+
+    @Test
+    public void test_removeAtWithValidIndex() {
+        //Arrange
+        sut.add(1);
+        sut.add(2);
+        sut.add(3);
+
+        //Act
+        int before = 0;
+        int beforeSize = 0;
+        beforeSize = sut.size();
+
+        before = sut.get(2); //third index
+
+        sut.removeAt(2);
+
+        int afterSize = 0;
+        afterSize = sut.size();
+
+        try {
+            sut.get(2); //should throw IndexOutOfBoundsException now that there is no third element.
+        } catch (Exception e) {
+            assertTrue(e instanceof IndexOutOfBoundsException);
+        } finally {
+            assertEquals(3, before); //assert that there actually was a third index
+            assertEquals(3, beforeSize); //size before removal
+            assertEquals(2, afterSize); //size after removal
+        }
+
+    }
+
+    @Test
+    public void test_removeAtWithInvalidIndexPositive() {
+        //Arrange
+        sut.add(1);
+        sut.add(2);
+        sut.add(3);
+
+        //Act
+        try {
+            sut.removeAt(3);
+        } catch (Exception e) {
+            assertTrue(e instanceof IndexOutOfBoundsException);
+        }
+    }
+
+    @Test
+    public void test_removeAtWithInvalidIndexNegative() {
+        //Arrange
+        sut.add(1);
+        sut.add(2);
+        sut.add(3);
+
+        //Act
+        try {
+            sut.removeAt(-1);
+        } catch (Exception e) {
+            assertTrue(e instanceof IndexOutOfBoundsException);
+        }
+    }
+
+    @Test
+    public void test_increaseCapacity() {
+        for(int i = 0; i < 15; i++) {
+            sut.add(i);
+        }
+
+        assertEquals(15, sut.size());
+
+    }
+
+    @Test
+    public void test_Iterator() {
+
+        sut.add(1);
+        sut.add(2);
+        sut.add(3);
+
+        Iterator<Integer> i = sut.iterator();
+
+        assertNotNull(i);
+        assertTrue(i.hasNext());
+        assertEquals(1, (int) i.next());
+        assertEquals(2, (int) i.next());
+        assertEquals(3, (int) i.next());
+        assertFalse(i.hasNext());
+    }
 
 }
-/**
- *
- * Method: get(int index)
- *
- */
-@Test
-public void testGet(){
-    //Arrange
-    String expectedElement = "Test3";
-    sut.add("Test1");
-    sut.add("Test2");
-    sut.add("Test3");
-    sut.add("Test4");
-    //Act
-    String actualElement = sut.get(2);
-    //Assert
-    Assert.assertEquals(expectedElement,actualElement);
-}
-
-/**
-* 
-* Method: removeAt(int index) 
-* 
-*/ 
-@Test
-public void testRemoveAt(){
-    //Arrange
-    sut.add("Test1");
-    sut.add("Test2");
-    sut.add("Test3");
-    sut.add("Test4");
-    int expectedSize = sut.size()-1;
-    //Act
-    sut.removeAt(3);
-    int currentSize = sut.size();
-    //Assert
-    Assert.assertEquals(expectedSize,currentSize);
-} 
-
-
-/** 
-* 
-* Method: increaseCapacity() 
-* 
-*/ 
-@Test
-public void testIncreaseCapacity(){
-    //Arrange
-    sut.add("Test1");
-    sut.add("Test2");
-    sut.add("Test3");
-    sut.add("Test4");
-    sut.add("Test5");
-    sut.add("Test6");
-    sut.add("Test7");
-    sut.add("Test8");
-    sut.add("Test9");
-    sut.add("Test10");
-    int expectedSize = 11;
-    //Act
-    sut.add("Test11");
-    int currentSize = sut.size();
-    //Assert
-    Assert.assertEquals(expectedSize,currentSize);
-
-} 
-
-} 

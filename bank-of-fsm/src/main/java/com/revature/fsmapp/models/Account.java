@@ -3,7 +3,6 @@ package com.revature.fsmapp.models;
 import com.revature.fsmapp.util.collection.ArrayList;
 import com.revature.fsmapp.util.collection.List;
 
-// TODO Refactor String password to allow for proper User checking as an account can have more than one user
 public class Account {
     private int accountId;
     private int accountNumber;
@@ -24,7 +23,6 @@ public class Account {
         this.pin = pin;
     }
 
-    // TODO implement default table of account numbers to apply a new account number to, maybe check to see if its in use first
     public Account() {
         accountId = accountNumber = -1;
         balance = 0;

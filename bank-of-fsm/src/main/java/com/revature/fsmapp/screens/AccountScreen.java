@@ -9,6 +9,7 @@ import com.revature.fsmapp.util.ScreenRouter;
 import com.revature.fsmapp.util.collection.List;
 
 
+import javax.naming.InsufficientResourcesException;
 import java.io.BufferedReader;
 import java.io.IOException;
 
@@ -111,7 +112,9 @@ public class AccountScreen extends Screen {
 
 
         } catch (IOException e) {
-            e.printStackTrace();
+
+        }catch (InsufficientResourcesException e){
+            System.err.println("Not enough funds available to make the transaction!!!");
         }
     }
 }

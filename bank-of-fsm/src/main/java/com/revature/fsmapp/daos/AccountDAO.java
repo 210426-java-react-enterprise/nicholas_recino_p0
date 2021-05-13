@@ -202,7 +202,7 @@ public class AccountDAO {
 
     private Transaction transactionProcessing(ResultSet rs) throws SQLException {
         Transaction transaction = new Transaction();
-        transaction.setTransactionID(rs.getInt("transactionid"));
+        transaction.setTransactionID(rs.getInt("transaction_id"));
         transaction.setSender(rs.getString("sender_name"));
         transaction.setSenderAccount(rs.getInt("sender_account"));
         transaction.setRecipient(rs.getString("recipient_name"));

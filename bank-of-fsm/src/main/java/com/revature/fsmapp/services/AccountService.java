@@ -7,6 +7,8 @@ import com.revature.fsmapp.models.AppUser;
 import com.revature.fsmapp.models.Transaction;
 import com.revature.fsmapp.util.collection.List;
 
+import javax.naming.InsufficientResourcesException;
+
 public class AccountService implements Service{
     private AccountDAO accountDAO;
 
@@ -68,10 +70,19 @@ public class AccountService implements Service{
         return accountDAO.accountExists(accountID);
     }
 
-    public void subtractBalance(double amount, int accountID,Account account) {
-
+    public void subtractBalance(double amount, int accountID,Account account)throws InsufficientResourcesException {
+        if(amount<0)
+            return;
+        if(account.getBalance()-amount < 0)
+            throw new InsufficientResourcesException();
+        accountDAO.subtractBalance(amount,accountID);
+        account.setBalance(account.getBalance()-amount);
     }
 
     public void addBalance(double amount, int recipientID,Account account) {
+        if(amount<0)
+            return;
+        accountDAO.addBalance(amount,recipientID);
+        account.setBalance(account.getBalance()+amount);
     }
 }

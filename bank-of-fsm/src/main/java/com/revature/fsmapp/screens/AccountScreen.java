@@ -54,7 +54,7 @@ public class AccountScreen extends Screen {
 
 //                    transaction = accountService.recordTransaction(activeUser.getUserName(), activeAccount.getAccountId(), activeAccount.getAccountId(), amount);
 //                    cache.getTransactions().add(transaction);
-                    accountService.addBalance(amount,activeAccount.getAccountId(),activeAccount);
+//                    accountService.addBalance(amount,activeAccount.getAccountId(),activeAccount);
                     System.out.printf("Your new balance is: $%.2f\n", activeAccount.getBalance());
                     router.navigate("/account_info");
                     break;

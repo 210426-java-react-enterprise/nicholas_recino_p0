@@ -1,7 +1,6 @@
 package com.revature.fsmapp.models;
 
 import com.revature.fsmapp.util.collection.ArrayList;
-import com.revature.fsmapp.util.collection.DoublyLinkedList;
 import com.revature.fsmapp.util.collection.List;
 
 // TODO Refactor String password to allow for proper User checking as an account can have more than one user

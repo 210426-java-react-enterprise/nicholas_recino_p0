@@ -30,6 +30,9 @@ public class AppUser {
         this.firstName = firstName;
         this.lastName = lastName;
         this.age = age;
+        activeAccount = null;
+        activeAccountNum = -1;
+        userID = -1;
     }
 
     @Override

@@ -2,11 +2,14 @@ package com.revature.fsmapp.daos;
 
 import com.revature.fsmapp.models.Account;
 import com.revature.fsmapp.models.AppUser;
+import com.revature.fsmapp.models.Transaction;
 import com.revature.fsmapp.util.ConnectionFactory;
 import com.revature.fsmapp.util.collection.ArrayList;
 import com.revature.fsmapp.util.collection.List;
 
 import java.sql.*;
+import java.time.LocalDateTime;
+import java.util.Optional;
 
 public class AccountDAO {
 
@@ -40,6 +43,25 @@ public class AccountDAO {
             e.printStackTrace();
         }
         return new ArrayList<>();
+    }
+
+    public boolean accountExists(int accountID) {
+
+        try {
+            String query = "select * from accounts where account_id = ?";
+
+            PreparedStatement stmt = conn.prepareStatement(query);
+            stmt.setInt(1, accountID);
+
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                return true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
     public double getAccountBalance(Account account) {
@@ -119,6 +141,76 @@ public class AccountDAO {
         }
         return false;
     }
+
+    public void addBalance(double amount, int accountID) {
+
+        try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
+            String query = "update accounts set balance = balance + ? where account_id = ?";
+
+            PreparedStatement stmt = conn.prepareStatement(query);
+
+            stmt.setDouble(1, amount);
+            stmt.setInt(2, accountID);
+
+            int rowsUpdated = stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void subtractBalance(double amount, int accountID) {
+
+        try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
+            String query = "update accounts set balance = balance - ? where account_id = ?";
+
+            PreparedStatement stmt = conn.prepareStatement(query);
+            stmt.setDouble(1, amount);
+            stmt.setInt(2, accountID);
+
+            int rowsUpdated = stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public Optional<Transaction> saveTransaction(String sender, int senderID,int recipientID,double amount) {
+
+        Optional<Transaction> _transaction = Optional.empty();
+
+        try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
+            String sql = "";
+
+            PreparedStatement stmt = conn.prepareStatement(sql);
+
+
+            int rowsUpdated = stmt.executeUpdate();
+
+            if (rowsUpdated != 0) {
+                ResultSet rs = stmt.getGeneratedKeys();
+                while (rs.next()) {
+                    Transaction transaction = transactionProcessing(rs);
+                    transaction.setTransactionDate(rs.getTimestamp("transaction_Date").toLocalDateTime());
+                    _transaction = Optional.of(transaction);
+                }
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return _transaction;
+    }
+
+    private Transaction transactionProcessing(ResultSet rs) throws SQLException {
+        Transaction transaction = new Transaction();
+        transaction.setTransactionID(rs.getInt("transactionid"));
+        transaction.setSender(rs.getString("sender_name"));
+        transaction.setSenderAccount(rs.getInt("sender_account"));
+        transaction.setRecipient(rs.getString("recipient_name"));
+        transaction.setRecipientAccount(rs.getInt("recipient_account"));
+        transaction.setAmount(rs.getDouble("amount"));
+        return transaction;
+    }
+
 }
 
 

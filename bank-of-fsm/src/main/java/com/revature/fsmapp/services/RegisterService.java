@@ -16,13 +16,13 @@ public class RegisterService implements Service{
     }
 
     private boolean isValidUsername(String username){
-        if(username.length()<8)
+        if(username.length()<7)
             return false;
         return(userNamePattern.matcher(username).matches());
     }
 
     private boolean isValidPassword(String password){
-        if(password.length()<8)
+        if(password.length()<7)
             return false;
         return(passwordPattern.matcher(password).matches());
     }
@@ -33,7 +33,7 @@ public class RegisterService implements Service{
         return(emailPattern.matcher(email).matches());
     }
     public boolean validatePotentialUserInfo(String password, String username,String email){
-        AppUser user = new AppUser(),user1=new AppUser();
+        AppUser user = null,user1=null;
         boolean validPassword = isValidPassword(password), validUsername = isValidUsername(username), validEmail = isValidEmail(email);
         if(validPassword&&validUsername)
             user = userDAO.findUserByUsernameAndPassword(username,password);

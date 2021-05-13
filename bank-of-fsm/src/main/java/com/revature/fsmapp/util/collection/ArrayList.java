@@ -1,6 +1,8 @@
 package com.revature.fsmapp.util.collection;
 
 import java.util.Arrays;
+import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 public class ArrayList<E> implements List<E> {
     private E[] arrayList;
@@ -82,6 +84,30 @@ public class ArrayList<E> implements List<E> {
         }
         arrayList = arrayCopy;
         size--;
+    }
+
+    //Iterator implementation. Hooray for foreach loops!
+    @Override
+    public Iterator<E> iterator() {
+        Iterator<E> iterator = new Iterator<E>() {
+            private int cursor = 0;
+
+            @Override
+            public boolean hasNext() {
+                return cursor < size && arrayList[cursor] != null;
+            }
+
+            @Override
+            @SuppressWarnings("unchecked")
+            public E next() {
+
+                if(!this.hasNext())
+                    throw new NoSuchElementException();
+
+                return (E) arrayList[cursor++];
+            }
+        };
+        return iterator;
     }
 
 }

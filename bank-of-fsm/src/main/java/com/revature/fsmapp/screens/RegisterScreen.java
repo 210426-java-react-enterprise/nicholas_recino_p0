@@ -1,27 +1,25 @@
 package com.revature.fsmapp.screens;
 
-import com.revature.fsmapp.application.Application;
 import com.revature.fsmapp.exceptions.DuplicateAccountException;
 import com.revature.fsmapp.models.AppUser;
 import com.revature.fsmapp.services.RegisterService;
-import com.revature.fsmapp.services.UserService;
-import com.revature.fsmapp.util.AppState;
+import com.revature.fsmapp.util.Cache;
 import com.revature.fsmapp.util.ScreenRouter;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 
-import static com.revature.fsmapp.application.Application.app;
-
 public class RegisterScreen extends Screen {
     private final ScreenRouter router;
     private  final RegisterService registerService;
+    private Cache cache;
 
-    public RegisterScreen(BufferedReader consoleReader, ScreenRouter router, RegisterService service) {
+    public RegisterScreen(BufferedReader consoleReader, ScreenRouter router,Cache cache, RegisterService service) {
         super("Register Screen", "/register");
         this.consoleReader = consoleReader;
         this.registerService = service;
         this.router = router;
+        this.cache = cache;
     }
 
     /**
@@ -35,10 +33,10 @@ public class RegisterScreen extends Screen {
             int age = 0;
             System.out.println("In order to register for an account please enter in your personal information below:");
 
-            System.out.print("Please Enter Username: ");
+            System.out.print("Please Enter Username (7 Characters Minimum): ");
             username = consoleReader.readLine();
 
-            System.out.print("Please Enter Password: ");
+            System.out.print("Please Enter Password: (7 Characters Minimum): ");
             password = consoleReader.readLine();
 
             System.out.print("Please Enter Your Email: ");
@@ -63,7 +61,7 @@ public class RegisterScreen extends Screen {
             user.setAge(age);
 
             if(registerService.registerUser(user)){
-                AppState.setActiveUser(user);
+                cache.setActiveUser(user);
                 System.out.println("Navigating to the Account Creation Screen");
                 router.navigate("/account_creation");
             }

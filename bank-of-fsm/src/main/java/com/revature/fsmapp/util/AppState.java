@@ -2,7 +2,6 @@ package com.revature.fsmapp.util;
 
 import com.revature.fsmapp.daos.AccountDAO;
 import com.revature.fsmapp.daos.UserDAO;
-import com.revature.fsmapp.exceptions.ServiceNotFoundException;
 import com.revature.fsmapp.models.AppUser;
 import com.revature.fsmapp.screens.*;
 import com.revature.fsmapp.services.*;
@@ -19,7 +18,10 @@ public class AppState {
     private boolean appRunning;
     private  UserDAO userDAO;
     private  AccountDAO accountDAO;
-    private int attemptsLeft = 0;
+    private AccountService accountService;
+    private LoginService loginService;
+    private RegisterService registerService;
+    private Cache cache;
 
     public AppState(){
         System.out.println("Initializing Application...");
@@ -28,18 +30,16 @@ public class AppState {
         userDAO= new UserDAO(conn = ConnectionFactory.getInstance().getConnection());
         accountDAO = new AccountDAO(conn = ConnectionFactory.getInstance().getConnection());
         this.consoleReader = new BufferedReader(new InputStreamReader(System.in));
+        cache = new Cache();
 
         this.router = new ScreenRouter();
-        // Refactor to use Service handler instead of a  new instance
-        this.router.addScreen(new AccountCreationScreen(consoleReader,router,new AccountService(accountDAO)))
-                .addScreen(new AccountScreen(consoleReader,router,new AccountService(accountDAO)))
-                .addScreen(new AccountSelectionScreen(consoleReader,router,new AccountService(accountDAO)))
-                .addScreen(new LoginScreen(consoleReader,router,new LoginService(userDAO)))
-                .addScreen(new RegisterScreen(consoleReader,router,new RegisterService(userDAO)))
-                .addScreen(new TransactionLogScreen(consoleReader,router))
-                .addScreen(new TransactionScreen(consoleReader))
-                .addScreen(new UserAccountsScreen(consoleReader,router,new AccountService(accountDAO)))
+        this.router
+                .addScreen(new AccountScreen(consoleReader,router,cache,accountService))
+                .addScreen(new LoginScreen(consoleReader,router,loginService))
+                .addScreen(new RegisterScreen(consoleReader,router,cache,registerService))
+                .addScreen(new UserAccountsScreen(consoleReader,router,cache,accountService))
                 .addScreen(new WelcomeScreen(consoleReader,router));
+
 
         System.out.println("Application Initialized...");
     }

@@ -127,11 +127,9 @@ public class AccountDAO {
                 ResultSet rs = stmt.getGeneratedKeys();
                 while (rs.next()) {
                     newID = rs.getInt("account_id");
-                    linkAccount(userID, newID);
                 }
             }
         } catch (SQLException e) {
-            e.printStackTrace();
         }
         return newID;
     }
@@ -147,14 +145,13 @@ public class AccountDAO {
         if(accountID == -1)
             return false;
         try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
-            String sql = "insert into account_access_permissions(user_id,account_id) values(?,?)";
+            String sql = "insert into accounts (user_id,account_id) values(?,?)";
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setInt(1, userID);
             stmt.setInt(2, accountID);
             stmt.executeUpdate();
             return true;
         } catch (SQLException e) {
-            e.printStackTrace();
         }
         return false;
     }

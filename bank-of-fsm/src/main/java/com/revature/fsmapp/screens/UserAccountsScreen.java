@@ -49,9 +49,10 @@ public class UserAccountsScreen extends Screen {
                         System.out.println("You do not have any open and registered accounts on file");
                         break;
                     }
-                    for(Account account:accounts){
-                        System.out.printf("Account ID: %d\n",account.getAccountNumber());
-                        System.out.printf("Current Balance: $%.2f\n---------------------------\n",account.getBalance());
+                    for(Account account:accounts) {
+                        System.out.printf("---------------------------\nAccount ID: %d\n", account.getAccountNumber());
+                        System.out.printf("Current Balance: $%.2f\n---------------------------\n", account.getBalance());
+                    }
                         try{
                             System.out.print("Please enter the account ID you wish to select: ");
                             int accountNumToGet = Integer.parseInt(consoleReader.readLine());
@@ -63,14 +64,14 @@ public class UserAccountsScreen extends Screen {
                         }
                         router.navigate("/account_info");
                         break;
-                    }
-                    break;
+
+
                 case "2":
                     System.out.print("How much would you like to deposit to open an account?"+"\n>");
                     double balance = Double.parseDouble(consoleReader.readLine());
                     System.out.print("Please enter a 4 character pin to use for the account: ");
                     String pin = consoleReader.readLine();
-                    Account accountToAdd = accountService.openAccount(AppState.getActiveUser(),pin,balance);
+                    Account accountToAdd = accountService.openAccount(cache.getActiveUser(),pin,balance);
                     if(accountToAdd.getAccountId()==-1){
                         System.out.println("System unable to create an account!!!!");
                     }
@@ -102,7 +103,6 @@ public class UserAccountsScreen extends Screen {
             }
         }catch(IOException | InterruptedException e){
             // Make Call to Log File to Print Stack Trace
-            e.printStackTrace();
         }
     }
 }

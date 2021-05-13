@@ -1,6 +1,13 @@
 package com.revature.fsmapp.services; 
 
+import com.revature.fsmapp.daos.UserDAO;
+import com.revature.fsmapp.models.AppUser;
 import org.junit.*;
+
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+import static org.junit.Assert.*;
 
 /** 
 * RegisterService Tester. 
@@ -9,15 +16,22 @@ import org.junit.*;
 * @since May 13, 2021
 * @version 1.0 
 */ 
-public class RegisterServiceTest { 
+public class RegisterServiceTest {
 
-@Before
-public void before() { 
-} 
+    private RegisterService sut;
+    private UserDAO mockUserDAO;
 
-@After
-public void after(){ 
-} 
+    @Before
+    public void before() {
+        mockUserDAO = mock(UserDAO.class);
+        sut = new RegisterService(mockUserDAO);
+    }
+
+    @After
+    public void after(){
+        mockUserDAO = null;
+        sut = null;
+    }
 
 /** 
 * 
@@ -25,8 +39,13 @@ public void after(){
 * 
 */ 
 @Test
-public void testValidatePotentialUserInfo(){ 
-//TODO: Test goes here... 
+public void testInValidatePotentialUserInfo(){
+    when(mockUserDAO.findUserByUsernameAndPassword(anyString(),anyString())).thenReturn(new AppUser());
+    when(mockUserDAO.findUserByEmail(anyString())).thenReturn(new AppUser());
+
+    boolean test = sut.validatePotentialUserInfo("password!","JohnDoe123","nickrecino@gmail.com");
+
+    assertFalse(test);
 } 
 
 /** 
@@ -39,64 +58,7 @@ public void testRegisterUser(){
 //TODO: Test goes here... 
 } 
 
-/** 
-* 
-* Method: isValidUsername(String username) 
-* 
-*/ 
-@Test
-public void testIsValidUsername(){ 
-//TODO: Test goes here... 
-/* 
-try { 
-   Method method = RegisterService.getClass().getMethod("isValidUsername", String.class); 
-   method.setAccessible(true); 
-   method.invoke(<Object>, <Parameters>); 
-} catch(NoSuchMethodException e) { 
-} catch(IllegalAccessException e) { 
-} catch(InvocationTargetException e) { 
-} 
-*/ 
-} 
 
-/** 
-* 
-* Method: isValidPassword(String password) 
-* 
-*/ 
-@Test
-public void testIsValidPassword(){ 
-//TODO: Test goes here... 
-/* 
-try { 
-   Method method = RegisterService.getClass().getMethod("isValidPassword", String.class); 
-   method.setAccessible(true); 
-   method.invoke(<Object>, <Parameters>); 
-} catch(NoSuchMethodException e) { 
-} catch(IllegalAccessException e) { 
-} catch(InvocationTargetException e) { 
-} 
-*/ 
-} 
 
-/** 
-* 
-* Method: isValidEmail(String email) 
-* 
-*/ 
-@Test
-public void testIsValidEmail(){ 
-//TODO: Test goes here... 
-/* 
-try { 
-   Method method = RegisterService.getClass().getMethod("isValidEmail", String.class); 
-   method.setAccessible(true); 
-   method.invoke(<Object>, <Parameters>); 
-} catch(NoSuchMethodException e) { 
-} catch(IllegalAccessException e) { 
-} catch(InvocationTargetException e) { 
-} 
-*/ 
-} 
 
 } 

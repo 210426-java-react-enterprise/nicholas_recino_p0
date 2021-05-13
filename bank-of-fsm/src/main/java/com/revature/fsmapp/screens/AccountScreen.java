@@ -56,7 +56,7 @@ public class AccountScreen extends Screen {
 //                    cache.getTransactions().add(transaction);
                     accountService.addBalance(amount,activeAccount.getAccountId(),activeAccount);
                     System.out.printf("Your new balance is: $%.2f\n", activeAccount.getBalance());
-                    router.navigate("/account");
+                    router.navigate("/account_info");
                     break;
                 case "2":
                     System.out.print("Please enter an amount to withdraw:\n> ");
@@ -66,7 +66,7 @@ public class AccountScreen extends Screen {
 //                    transaction = accountService.recordTransaction(activeUser.getUserName(), activeAccount.getAccountId(), activeAccount.getAccountId(), amount);
 //                    cache.getTransactions().add(transaction);
                     System.out.printf("Your new balance is: $%.2f\n", activeAccount.getBalance());
-                    router.navigate("/account");
+                    router.navigate("/account_info");
                     break;
 //                case "3":
 //                    System.out.print("Please enter an amount to transfer:\n> ");

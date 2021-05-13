@@ -71,8 +71,7 @@ public class RegisterScreen extends Screen {
             System.err.println("Registration failed due to invalid information");
             render();
         }catch(DuplicateAccountException e){
-            e.printStackTrace();
-            System.err.println("Information already taken, please try again");
+            System.err.println("Information already taken or not valid, please try again");
             render();
         }
 
